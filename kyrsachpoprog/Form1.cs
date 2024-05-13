@@ -17,14 +17,61 @@ namespace kyrsachpoprog
             InitializeComponent();
         }
 
-        private void Registry_L_Click(object sender, EventArgs e)
-        {
+        private Random Rnd = new Random();
+        private Manager MainManager;
 
+        private void Main_F_Load(object sender, EventArgs e)
+        {
+            MainManager = new Manager(LogPatients_TB,Stat_TB);
+            MainManager.Chance = Convert.ToInt32(Input_NUD.Value);
+            MainManager.CountPatient = Convert.ToInt32(Count_NUD.Value);
+
+            MainManager.AddQueue(new QueuePatient(0, QueueReg_LB));
+            MainManager.AddRegistry(new Registry(Registry_TB));
+
+            MainManager.AddQueue(new QueuePatient(1, QueueDoctor1_LB));
+            MainManager.AddQueue(new QueuePatient(2, QueueDoctor2_LB));
+            MainManager.AddQueue(new QueuePatient(3, QueueDoctor3_LB));
+            MainManager.AddQueue(new QueuePatient(4, QueueDoctor4_LB));
+            MainManager.AddQueue(new QueuePatient(5, QueueDoctor5_LB));
+
+            MainManager.AddDoctor(new Doctor(Doctor1_TB));
+            MainManager.AddDoctor(new Doctor(Doctor2_TB));
+            MainManager.AddDoctor(new Doctor(Doctor3_TB));
+            MainManager.AddDoctor(new Doctor(Doctor4_TB));
+            MainManager.AddDoctor(new Doctor(Doctor5_TB));
         }
 
-        private void Registry_TB_TextChanged(object sender, EventArgs e)
+        private void Timer_T_Tick(object sender, EventArgs e)
         {
+            MainManager.OnTimer();
+        }
 
+        private void Manual_B_Click(object sender, EventArgs e)
+        {
+            Timer_T_Tick(this, e);
+        }
+
+        private void SetMode(object sender, EventArgs e)
+        {
+            Manual_B.Enabled = Manual_RB.Checked;
+            Timer_T.Enabled = Auto_RB.Checked;
+            Stat_B.Enabled = Manual_RB.Checked;
+        }
+
+        private void Stat_B_Click(object sender, EventArgs e)
+        {
+            //MainManager.SetStat();
+        }
+
+        private void Input_NUD_ValueChanged(object sender, EventArgs e)
+        {
+            MainManager.Chance = Convert.ToInt32(Input_NUD.Value);
+        }
+
+        private void Count_NUD_ValueChanged(object sender, EventArgs e)
+        {
+            MainManager.CountPatient = Convert.ToInt32(Count_NUD.Value);
         }
     }
 }

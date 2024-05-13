@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.Doctor1_TB = new System.Windows.Forms.TextBox();
             this.Doctor1_L = new System.Windows.Forms.Label();
             this.QueueDoctor1_L = new System.Windows.Forms.Label();
@@ -64,18 +65,19 @@
             this.Input_L = new System.Windows.Forms.Label();
             this.LogPatients_L = new System.Windows.Forms.Label();
             this.LogPatients_TB = new System.Windows.Forms.TextBox();
-            this.Report_GB = new System.Windows.Forms.GroupBox();
-            this.Report_LB = new System.Windows.Forms.ListBox();
-            this.Report_B = new System.Windows.Forms.Button();
-            this.Report_L = new System.Windows.Forms.Label();
-            this.QueueReg_TB = new System.Windows.Forms.ListBox();
+            this.Stat_GB = new System.Windows.Forms.GroupBox();
+            this.Stat_B = new System.Windows.Forms.Button();
+            this.Stat_L = new System.Windows.Forms.Label();
+            this.QueueReg_LB = new System.Windows.Forms.ListBox();
             this.Registry_GB = new System.Windows.Forms.GroupBox();
+            this.Stat_TB = new System.Windows.Forms.TextBox();
+            this.Timer_T = new System.Windows.Forms.Timer(this.components);
             this.Doctors_GB.SuspendLayout();
             this.Managment_GB.SuspendLayout();
             this.NewPatients_GB.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Count_NUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Input_NUD)).BeginInit();
-            this.Report_GB.SuspendLayout();
+            this.Stat_GB.SuspendLayout();
             this.Registry_GB.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -128,7 +130,6 @@
             this.Registry_TB.Name = "Registry_TB";
             this.Registry_TB.Size = new System.Drawing.Size(172, 20);
             this.Registry_TB.TabIndex = 28;
-            this.Registry_TB.TextChanged += new System.EventHandler(this.Registry_TB_TextChanged);
             // 
             // Doctors_GB
             // 
@@ -308,7 +309,6 @@
             this.Registry_L.Size = new System.Drawing.Size(116, 13);
             this.Registry_L.TabIndex = 33;
             this.Registry_L.Text = "Стойка регистратуры";
-            this.Registry_L.Click += new System.EventHandler(this.Registry_L_Click);
             // 
             // Managment_GB
             // 
@@ -330,6 +330,7 @@
             this.Manual_B.TabIndex = 2;
             this.Manual_B.Text = "Шаг";
             this.Manual_B.UseVisualStyleBackColor = true;
+            this.Manual_B.Click += new System.EventHandler(this.Manual_B_Click);
             // 
             // Manual_RB
             // 
@@ -369,16 +370,38 @@
             // Count_NUD
             // 
             this.Count_NUD.Location = new System.Drawing.Point(163, 85);
+            this.Count_NUD.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.Count_NUD.Name = "Count_NUD";
             this.Count_NUD.Size = new System.Drawing.Size(72, 20);
             this.Count_NUD.TabIndex = 37;
+            this.Count_NUD.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.Count_NUD.ValueChanged += new System.EventHandler(this.Count_NUD_ValueChanged);
             // 
             // Input_NUD
             // 
             this.Input_NUD.Location = new System.Drawing.Point(163, 41);
+            this.Input_NUD.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.Input_NUD.Name = "Input_NUD";
             this.Input_NUD.Size = new System.Drawing.Size(72, 20);
             this.Input_NUD.TabIndex = 36;
+            this.Input_NUD.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.Input_NUD.ValueChanged += new System.EventHandler(this.Input_NUD_ValueChanged);
             // 
             // Count_L
             // 
@@ -416,55 +439,48 @@
             this.LogPatients_TB.Size = new System.Drawing.Size(538, 257);
             this.LogPatients_TB.TabIndex = 37;
             // 
-            // Report_GB
+            // Stat_GB
             // 
-            this.Report_GB.Controls.Add(this.Report_LB);
-            this.Report_GB.Controls.Add(this.Report_B);
-            this.Report_GB.Controls.Add(this.Report_L);
-            this.Report_GB.Location = new System.Drawing.Point(1036, 12);
-            this.Report_GB.Name = "Report_GB";
-            this.Report_GB.Size = new System.Drawing.Size(335, 615);
-            this.Report_GB.TabIndex = 38;
-            this.Report_GB.TabStop = false;
-            this.Report_GB.Text = "Отчет";
+            this.Stat_GB.Controls.Add(this.Stat_TB);
+            this.Stat_GB.Controls.Add(this.Stat_B);
+            this.Stat_GB.Controls.Add(this.Stat_L);
+            this.Stat_GB.Location = new System.Drawing.Point(1036, 12);
+            this.Stat_GB.Name = "Stat_GB";
+            this.Stat_GB.Size = new System.Drawing.Size(335, 615);
+            this.Stat_GB.TabIndex = 38;
+            this.Stat_GB.TabStop = false;
+            this.Stat_GB.Text = "Отчет";
             // 
-            // Report_LB
+            // Stat_B
             // 
-            this.Report_LB.FormattingEnabled = true;
-            this.Report_LB.Location = new System.Drawing.Point(6, 49);
-            this.Report_LB.Name = "Report_LB";
-            this.Report_LB.Size = new System.Drawing.Size(320, 498);
-            this.Report_LB.TabIndex = 41;
+            this.Stat_B.Location = new System.Drawing.Point(6, 561);
+            this.Stat_B.Name = "Stat_B";
+            this.Stat_B.Size = new System.Drawing.Size(323, 45);
+            this.Stat_B.TabIndex = 40;
+            this.Stat_B.Text = "Количество  обслуженных врачами пациентов";
+            this.Stat_B.UseVisualStyleBackColor = true;
+            this.Stat_B.Click += new System.EventHandler(this.Stat_B_Click);
             // 
-            // Report_B
+            // Stat_L
             // 
-            this.Report_B.Location = new System.Drawing.Point(6, 561);
-            this.Report_B.Name = "Report_B";
-            this.Report_B.Size = new System.Drawing.Size(323, 45);
-            this.Report_B.TabIndex = 40;
-            this.Report_B.Text = "Количество  обслуженных врачами пациентов";
-            this.Report_B.UseVisualStyleBackColor = true;
+            this.Stat_L.AutoSize = true;
+            this.Stat_L.Location = new System.Drawing.Point(3, 26);
+            this.Stat_L.Name = "Stat_L";
+            this.Stat_L.Size = new System.Drawing.Size(112, 13);
+            this.Stat_L.TabIndex = 39;
+            this.Stat_L.Text = "Результаты запроса";
             // 
-            // Report_L
+            // QueueReg_LB
             // 
-            this.Report_L.AutoSize = true;
-            this.Report_L.Location = new System.Drawing.Point(3, 26);
-            this.Report_L.Name = "Report_L";
-            this.Report_L.Size = new System.Drawing.Size(112, 13);
-            this.Report_L.TabIndex = 39;
-            this.Report_L.Text = "Результаты запроса";
-            // 
-            // QueueReg_TB
-            // 
-            this.QueueReg_TB.FormattingEnabled = true;
-            this.QueueReg_TB.Location = new System.Drawing.Point(6, 77);
-            this.QueueReg_TB.Name = "QueueReg_TB";
-            this.QueueReg_TB.Size = new System.Drawing.Size(172, 186);
-            this.QueueReg_TB.TabIndex = 35;
+            this.QueueReg_LB.FormattingEnabled = true;
+            this.QueueReg_LB.Location = new System.Drawing.Point(6, 77);
+            this.QueueReg_LB.Name = "QueueReg_LB";
+            this.QueueReg_LB.Size = new System.Drawing.Size(172, 186);
+            this.QueueReg_LB.TabIndex = 35;
             // 
             // Registry_GB
             // 
-            this.Registry_GB.Controls.Add(this.QueueReg_TB);
+            this.Registry_GB.Controls.Add(this.QueueReg_LB);
             this.Registry_GB.Controls.Add(this.Registry_TB);
             this.Registry_GB.Controls.Add(this.QueueReg_L);
             this.Registry_GB.Controls.Add(this.Registry_L);
@@ -475,13 +491,26 @@
             this.Registry_GB.TabStop = false;
             this.Registry_GB.Text = "Регистратура";
             // 
+            // Stat_TB
+            // 
+            this.Stat_TB.Location = new System.Drawing.Point(7, 43);
+            this.Stat_TB.Multiline = true;
+            this.Stat_TB.Name = "Stat_TB";
+            this.Stat_TB.Size = new System.Drawing.Size(322, 512);
+            this.Stat_TB.TabIndex = 41;
+            // 
+            // Timer_T
+            // 
+            this.Timer_T.Interval = 60000;
+            this.Timer_T.Tick += new System.EventHandler(this.Timer_T_Tick);
+            // 
             // Main_F
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1382, 634);
             this.Controls.Add(this.Registry_GB);
-            this.Controls.Add(this.Report_GB);
+            this.Controls.Add(this.Stat_GB);
             this.Controls.Add(this.LogPatients_TB);
             this.Controls.Add(this.LogPatients_L);
             this.Controls.Add(this.NewPatients_GB);
@@ -489,6 +518,7 @@
             this.Controls.Add(this.Doctors_GB);
             this.Name = "Main_F";
             this.Text = "Поликлиника";
+            this.Load += new System.EventHandler(this.Main_F_Load);
             this.Doctors_GB.ResumeLayout(false);
             this.Doctors_GB.PerformLayout();
             this.Managment_GB.ResumeLayout(false);
@@ -497,8 +527,8 @@
             this.NewPatients_GB.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Count_NUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Input_NUD)).EndInit();
-            this.Report_GB.ResumeLayout(false);
-            this.Report_GB.PerformLayout();
+            this.Stat_GB.ResumeLayout(false);
+            this.Stat_GB.PerformLayout();
             this.Registry_GB.ResumeLayout(false);
             this.Registry_GB.PerformLayout();
             this.ResumeLayout(false);
@@ -527,12 +557,11 @@
         private System.Windows.Forms.Label Input_L;
         private System.Windows.Forms.Label LogPatients_L;
         private System.Windows.Forms.TextBox LogPatients_TB;
-        private System.Windows.Forms.GroupBox Report_GB;
-        private System.Windows.Forms.Button Report_B;
-        private System.Windows.Forms.Label Report_L;
+        private System.Windows.Forms.GroupBox Stat_GB;
+        private System.Windows.Forms.Button Stat_B;
+        private System.Windows.Forms.Label Stat_L;
         private System.Windows.Forms.ListBox QueueDoctor1_LB;
-        private System.Windows.Forms.ListBox Report_LB;
-        private System.Windows.Forms.ListBox QueueReg_TB;
+        private System.Windows.Forms.ListBox QueueReg_LB;
         private System.Windows.Forms.ListBox QueueDoctor5_LB;
         private System.Windows.Forms.ListBox QueueDoctor4_LB;
         private System.Windows.Forms.ListBox QueueDoctor3_LB;
@@ -550,6 +579,8 @@
         private System.Windows.Forms.TextBox Doctor4_TB;
         private System.Windows.Forms.Label QueueDoctor3_L;
         private System.Windows.Forms.GroupBox Registry_GB;
+        private System.Windows.Forms.TextBox Stat_TB;
+        private System.Windows.Forms.Timer Timer_T;
     }
 }
 

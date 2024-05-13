@@ -22,7 +22,7 @@ namespace kyrsachpoprog
 
         public override string ToString()
         {
-            return string.Format("Пациент {0} прошёл {1} врача/-ей",_NumDoctorVisit,"*************");
+            return string.Format("Пациент {0} прошёл {1} врача/-ей",_ID, _NumDoctorVisit);
         }
     }
 }

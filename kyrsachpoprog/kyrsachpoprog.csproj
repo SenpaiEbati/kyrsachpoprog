@@ -57,12 +57,15 @@
     </Compile>
     <Compile Include="LogArgs.cs" />
     <Compile Include="LogItem.cs" />
+    <Compile Include="Manager.cs" />
     <Compile Include="OnlyPrintArgs.cs" />
     <Compile Include="Patient.cs" />
     <Compile Include="PatientArgs.cs" />
+    <Compile Include="QueuePatient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queue.cs" />
+    <Compile Include="Registry.cs" />
+    <Compile Include="RegistryArgs.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

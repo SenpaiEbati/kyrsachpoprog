@@ -7,32 +7,25 @@ using System.Windows.Forms;
 
 namespace kyrsachpoprog
 {
-    public class Doctor
+    public class Registry
     {
-        private static int Counter;
-        private int _ID;
         private TextBox _TB;
-        private Patient _Current;
         private string _Name;
+        private Patient _Current;
 
-        public Doctor(TextBox TB)
-        {
-            _ID = ++Counter;
-            _Name = "Доктор " + _ID;
+        public Registry(TextBox TB) 
+        { 
             _TB = TB;
             if (_TB != null)
                 TB.Clear();
+            _Name = "Регистратура";
         }
 
-        public Doctor(): this(null) { }
+        public Registry(): this(null){ }
+
         public override string ToString()
         {
             return _Name;
-        }
-
-        public int DoctorNumber
-        {
-            get{ return _ID; }
         }
 
         private bool SetPatient(PatientArgs E)
@@ -44,27 +37,27 @@ namespace kyrsachpoprog
                     if (_TB != null)
                         _TB.Text = E.Sick.ToString();
                     if (E.PrintResult != null)
-                        E.PrintResult(this + ":принял у себя <" + E.Sick + ">");
+                        E.PrintResult(this + ":приняла у себя <" + E.Sick + ">");
                 }
                 else
                 {
                     if (E.PrintResult != null)
-                        E.PrintResult(this + ": <" + E.Sick + "> непопал на прием к врачу из-за занятости кабинета другим пациентом или других причин!");
+                        E.PrintResult(this + ": <" + E.Sick + "> непопал на стойку из-за занятости другим пациентом или других причин!");
                 }
             return _Current == null;
         }
 
-        public event EventHandler<DoctorArgs> IsReadyEvent;
-        
+        public event EventHandler<RegistryArgs> IsReadyEventRegistry;
+
         private void OnIsReady(CalcBack PrintResult)
         {
-            if (IsReadyEvent != null && _Current == null)
+            if (IsReadyEventRegistry != null && _Current == null)
             {
-                DoctorArgs E = new DoctorArgs();
+                RegistryArgs E = new RegistryArgs();
                 E.PrintResult = PrintResult;
-                E.SetDoctor = SetPatient;
+                E.SetRegistry = SetPatient;
                 E.IsReady = true;
-                IsReadyEvent(this, E);
+                IsReadyEventRegistry(this, E);
             }
         }
 
@@ -75,7 +68,7 @@ namespace kyrsachpoprog
                 if (_TB != null)
                     _TB.Clear();
                 if (e.PrintResult != null)
-                    e.PrintResult(this + ": покинул кабинет <" + _Current + ">");
+                    e.PrintResult(this + ": покинул стойку <" + _Current + ">");
                 _Current = null;
                 OnIsReady(e.PrintResult);
             }

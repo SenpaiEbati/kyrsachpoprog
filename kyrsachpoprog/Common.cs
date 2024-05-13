@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace kyrsachpoprog
 {
     public delegate void CalcBack(string s);
-    public delegate void DoctorCalcBack(PatientArgs e);
+    public delegate bool DoctorCalcBack(PatientArgs e);
+    public delegate bool RegistryCalcBack(PatientArgs e);
     public delegate void LogCalcBack(LogItem e);
 }
