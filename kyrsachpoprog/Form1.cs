@@ -26,14 +26,14 @@ namespace kyrsachpoprog
             MainManager.Chance = Convert.ToInt32(Input_NUD.Value);
             MainManager.CountPatient = Convert.ToInt32(Count_NUD.Value);
 
-            MainManager.AddQueue(new QueuePatient(0, QueueReg_LB));
+            MainManager.AddQueue(new QueuePatient(QueueReg_LB));
             MainManager.AddRegistry(new Registry(Registry_TB));
 
-            MainManager.AddQueue(new QueuePatient(1, QueueDoctor1_LB));
-            MainManager.AddQueue(new QueuePatient(2, QueueDoctor2_LB));
-            MainManager.AddQueue(new QueuePatient(3, QueueDoctor3_LB));
-            MainManager.AddQueue(new QueuePatient(4, QueueDoctor4_LB));
-            MainManager.AddQueue(new QueuePatient(5, QueueDoctor5_LB));
+            MainManager.AddQueue(new QueuePatient(QueueDoctor1_LB));
+            MainManager.AddQueue(new QueuePatient(QueueDoctor2_LB));
+            MainManager.AddQueue(new QueuePatient(QueueDoctor3_LB));
+            MainManager.AddQueue(new QueuePatient(QueueDoctor4_LB));
+            MainManager.AddQueue(new QueuePatient(QueueDoctor5_LB));
 
             MainManager.AddDoctor(new Doctor(Doctor1_TB));
             MainManager.AddDoctor(new Doctor(Doctor2_TB));

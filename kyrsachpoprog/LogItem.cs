@@ -10,14 +10,16 @@ namespace kyrsachpoprog
     {
         private static int Counter;
         private int _ID;
-        private int _DoctorNumber;
+        private int _Number;
+        private Patient _Patient;
 
-        public LogItem(int DoctorNumber)
+        public LogItem(int Number, Patient P)
         {
-            if (DoctorNumber > 0 && DoctorNumber < 6)
+            if (Number >= 0 && Number <=5)
             {
                 _ID = ++Counter;
-                _DoctorNumber = DoctorNumber;
+                _Number = Number;
+                _Patient = P;
             }
             else
                 throw new Exception("Параметры Log-файла заданы неправильно");
@@ -25,13 +27,13 @@ namespace kyrsachpoprog
 
         public override string ToString()
         {
-            return string.Format("Доктор {0} принимает {1}",_DoctorNumber,1111);
+            return string.Format("{0} принимает пациента №{1}",_Number > 0 ? "Доктор №" + _Number : "Регистратура",_Patient.ID);
         }
 
-        public int DoctorNumber
+        public int Number
         {
-            get { return _DoctorNumber; }
-            set { if (value > 0 && value < 6) _DoctorNumber = value; }
+            get { return _Number; }
+            set { if (value > 0 && value < 6) _Number = value; }
         }
     }
 }

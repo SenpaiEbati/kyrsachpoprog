@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,7 +13,7 @@ namespace kyrsachpoprog
         private TextBox _TB;
         private string _Name;
         private Patient _Current;
-
+        private int _i;
         public Registry(TextBox TB) 
         { 
             _TB = TB;
@@ -37,7 +38,7 @@ namespace kyrsachpoprog
                     if (_TB != null)
                         _TB.Text = E.Sick.ToString();
                     if (E.PrintResult != null)
-                        E.PrintResult(this + ":приняла у себя <" + E.Sick + ">");
+                        E.PrintResult(this + ": приняла у себя <" + E.Sick + ">");
                 }
                 else
                 {
@@ -65,18 +66,20 @@ namespace kyrsachpoprog
         {
             if (_Current != null)
             {
-                if (_TB != null)
-                    _TB.Clear();
                 if (e.PrintResult != null)
-                    e.PrintResult(this + ": покинул стойку <" + _Current + ">");
-                _Current = null;
-                OnIsReady(e.PrintResult);
+                    e.PrintLog(new LogItem(0,_Current));
+                if (_i > 1) 
+                {
+                    if (_TB != null)
+                        _TB.Clear();
+                    if (e.PrintResult != null)
+                        e.PrintResult(this + ": покинул стойку <" + _Current + ">");
+                    _Current = null;
+                    OnIsReady(e.PrintResult);
+                    _i = 0;
+                }
+                _i++;
             }
-            /*else
-            {
-                if (_TB != null)
-                    _TB.Text = _Current.ToString();
-            }*/
         }
 
         public void WaitSingle(object sender, OnlyPrintArgs e)

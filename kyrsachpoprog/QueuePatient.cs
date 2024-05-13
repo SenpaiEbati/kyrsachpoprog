@@ -15,14 +15,14 @@ namespace kyrsachpoprog
         private ListBox _LB;
         private string _Name;
 
-        public QueuePatient(int DoctorNumber, ListBox LB)
+        public QueuePatient(ListBox LB)
         {
-            _ID = ++Counter;
+            _ID = ++Counter - 1;
             _LB = LB;
-            _Name = string.Format("Очередь {0}",DoctorNumber > 0 ? "к доктору №" + DoctorNumber : "в регистратуру");
+            _Name = string.Format("Очередь {0}",_ID > 0 ? "к доктору №" + _ID : "в регистратуру");
         }
 
-        public QueuePatient() : this(0, null) { } 
+        public QueuePatient() : this(null) { } 
 
         public override string ToString()
         {
@@ -73,7 +73,7 @@ namespace kyrsachpoprog
                 E.Sick = _Queue.Dequeue();
                 _LB.Items.Remove(E.Sick);
                 if (e.PrintResult != null)
-                    e.PrintResult(this + ": вышел из кабинета" + E.Sick + ">");
+                    e.PrintResult(this + ": вышел из кабинета <" + E.Sick + ">");
                 E.PrintResult = e.PrintResult;
                 e.IsReady = e.SetDoctor(E);
             }
@@ -87,7 +87,7 @@ namespace kyrsachpoprog
                 E.Sick = _Queue.Dequeue();
                 _LB.Items.Remove(E.Sick);
                 if (e.PrintResult != null)
-                    e.PrintResult(this + ": вышел из кабинета" + E.Sick + ">");
+                    e.PrintResult(this + ": покинул стойку <" + E.Sick + ">");
                 E.PrintResult = e.PrintResult;
                 e.IsReady = e.SetRegistry(E);
             }

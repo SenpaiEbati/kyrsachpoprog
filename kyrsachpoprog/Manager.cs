@@ -34,7 +34,7 @@ namespace kyrsachpoprog
 
         public int CountPatient
         {
-            set { if (value >= 1 && value <= 3) _CountPatient = value; }
+            set { if (value >= 1 && value <= 20) _CountPatient = value; }
         }
 
         private event EventHandler<PatientArgs> NewPatientEvent;

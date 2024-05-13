@@ -24,5 +24,7 @@ namespace kyrsachpoprog
         {
             return string.Format("Пациент {0} прошёл {1} врача/-ей",_ID, _NumDoctorVisit);
         }
+
+        public int ID {  get { return _ID; } }
     }
 }

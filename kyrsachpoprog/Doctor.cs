@@ -14,11 +14,12 @@ namespace kyrsachpoprog
         private TextBox _TB;
         private Patient _Current;
         private string _Name;
+        private int _i; 
 
         public Doctor(TextBox TB)
         {
             _ID = ++Counter;
-            _Name = "Доктор " + _ID;
+            _Name = "Врач №" + _ID;
             _TB = TB;
             if (_TB != null)
                 TB.Clear();
@@ -44,7 +45,7 @@ namespace kyrsachpoprog
                     if (_TB != null)
                         _TB.Text = E.Sick.ToString();
                     if (E.PrintResult != null)
-                        E.PrintResult(this + ":принял у себя <" + E.Sick + ">");
+                        E.PrintResult(this + ": принял у себя <" + E.Sick + ">");
                 }
                 else
                 {
@@ -72,18 +73,20 @@ namespace kyrsachpoprog
         {
             if (_Current != null)
             {
-                if (_TB != null)
-                    _TB.Clear();
                 if (e.PrintResult != null)
-                    e.PrintResult(this + ": покинул кабинет <" + _Current + ">");
-                _Current = null;
-                OnIsReady(e.PrintResult);
+                    e.PrintLog(new LogItem(_ID, _Current));
+                if (_i > _ID - 1)
+                {
+                    if (_TB != null)
+                        _TB.Clear();
+                    if (e.PrintResult != null)
+                        e.PrintResult(this + ": покинул кабинет <" + _Current + ">");
+                    _Current = null;
+                    OnIsReady(e.PrintResult);
+                    _i = 0;
+                }
+                _i++;
             }
-            /*else
-            {
-                if (_TB != null)
-                    _TB.Text = _Current.ToString();
-            }*/
         }
 
         public void WaitSingle(object sender, OnlyPrintArgs e)
