@@ -14,13 +14,15 @@ namespace kyrsachpoprog
         private TextBox _TB;
         private Patient _Current;
         private string _Name;
-        private int _i; 
+        private int _i;
+        private Queue<Patient> _AcceptedPatient;
 
         public Doctor(TextBox TB)
         {
             _ID = ++Counter;
             _Name = "Врач №" + _ID;
             _TB = TB;
+            _AcceptedPatient = new Queue<Patient>();
             if (_TB != null)
                 TB.Clear();
         }
@@ -36,12 +38,18 @@ namespace kyrsachpoprog
             get{ return _ID; }
         }
 
+        public int CountAcceptedPatient
+        {
+            get { return _AcceptedPatient.Count; } 
+        }
+
         private bool SetPatient(PatientArgs E)
         {
             if (E.Sick != null)
                 if (_Current == null)
                 {
                     _Current = E.Sick;
+                    _AcceptedPatient.Enqueue(_Current);
                     if (_TB != null)
                         _TB.Text = E.Sick.ToString();
                     if (E.PrintResult != null)

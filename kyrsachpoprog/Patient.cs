@@ -10,21 +10,29 @@ namespace kyrsachpoprog
     {
         private static int Counter;
         private int _ID;
-        private int _NumDoctorVisit;
+        private Queue<int> _NumDoctorsVisit;
 
-        public Patient(int n)
+        public Patient()
         {
             _ID = ++Counter;
-            _NumDoctorVisit = n;
+            _NumDoctorsVisit = new Queue<int>();
         }
-
-        public Patient(): this(0) { }
 
         public override string ToString()
         {
-            return string.Format("Пациент {0} прошёл {1} врача/-ей",_ID, _NumDoctorVisit);
+            return string.Format("Пациент {0} прошёл {1} врача/-ей",_ID, _NumDoctorsVisit.Count);
         }
 
         public int ID {  get { return _ID; } }
+
+        public bool CountDoctorsVisited(int DoctorID)
+        {
+            return _NumDoctorsVisit.Contains(DoctorID);
+        }
+
+        public void VisitDoctor(int DoctorID)
+        {
+            _NumDoctorsVisit.Enqueue(DoctorID);
+        }
     }
 }

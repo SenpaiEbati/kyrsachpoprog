@@ -74,6 +74,7 @@ namespace kyrsachpoprog
                         _TB.Clear();
                     if (e.PrintResult != null)
                         e.PrintResult(this + ": покинул стойку <" + _Current + ">");
+                    AssingPatientToDoctor(_Current);
                     _Current = null;
                     OnIsReady(e.PrintResult);
                     _i = 0;

@@ -155,5 +155,18 @@ namespace kyrsachpoprog
                 Queue.SinglePatientEvent -= Reg.WaitSingle;
             
         }
+
+        private void AssingPatientToDoctor(Patient patient)
+        {
+            var availableDoctors = Doctors
+                .Where(d => !patient.CountDoctorsVisited(d.DoctorNumber))
+                .OrderBy(d => d.CountAcceptedPatient)
+                .ThenByDescending(d => d.DoctorNumber)
+                .ToList();
+            if (availableDoctors.Any())
+            {
+                var doctor = availableDoctors.First();  
+            }
+        }
     }
 }
