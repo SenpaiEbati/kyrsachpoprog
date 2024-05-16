@@ -73,23 +73,9 @@ namespace kyrsachpoprog
                 E.Sick = _Queue.Dequeue();
                 _LB.Items.Remove(E.Sick);
                 if (e.PrintResult != null)
-                    e.PrintResult(this + ": вышел из кабинета <" + E.Sick + ">");
+                    e.PrintResult(this + ": покинул очередь <" + E.Sick + ">");
                 E.PrintResult = e.PrintResult;
                 e.IsReady = e.SetDoctor(E);
-            }
-        }
-
-        public void SetRegistry(object sender, RegistryArgs e)
-        {
-            if (_Queue.Count > 0 && e.IsReady)
-            {
-                PatientArgs E = new PatientArgs();
-                E.Sick = _Queue.Dequeue();
-                _LB.Items.Remove(E.Sick);
-                if (e.PrintResult != null)
-                    e.PrintResult(this + ": покинул стойку <" + E.Sick + ">");
-                E.PrintResult = e.PrintResult;
-                e.IsReady = e.SetRegistry(E);
             }
         }
     }

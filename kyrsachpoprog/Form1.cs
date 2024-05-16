@@ -27,19 +27,18 @@ namespace kyrsachpoprog
             MainManager.CountPatient = Convert.ToInt32(Count_NUD.Value);
 
             MainManager.AddQueue(new QueuePatient(QueueReg_LB));
-            MainManager.AddRegistry(new Registry(Registry_TB));
-
             MainManager.AddQueue(new QueuePatient(QueueDoctor1_LB));
             MainManager.AddQueue(new QueuePatient(QueueDoctor2_LB));
             MainManager.AddQueue(new QueuePatient(QueueDoctor3_LB));
             MainManager.AddQueue(new QueuePatient(QueueDoctor4_LB));
             MainManager.AddQueue(new QueuePatient(QueueDoctor5_LB));
 
-            MainManager.AddDoctor(new Doctor(Doctor1_TB));
-            MainManager.AddDoctor(new Doctor(Doctor2_TB));
-            MainManager.AddDoctor(new Doctor(Doctor3_TB));
-            MainManager.AddDoctor(new Doctor(Doctor4_TB));
-            MainManager.AddDoctor(new Doctor(Doctor5_TB));
+            MainManager.AddDoctor(new Doctor(Registry_TB, MainManager));
+            MainManager.AddDoctor(new Doctor(Doctor1_TB, MainManager));
+            MainManager.AddDoctor(new Doctor(Doctor2_TB, MainManager));
+            MainManager.AddDoctor(new Doctor(Doctor3_TB, MainManager));
+            MainManager.AddDoctor(new Doctor(Doctor4_TB, MainManager));
+            MainManager.AddDoctor(new Doctor(Doctor5_TB, MainManager));
         }
 
         private void Timer_T_Tick(object sender, EventArgs e)

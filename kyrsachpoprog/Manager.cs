@@ -8,11 +8,10 @@ using System.Windows.Forms;
 
 namespace kyrsachpoprog
 {
-    class Manager
+    public class Manager
     {
         private List<QueuePatient> QueuesPatient = new List<QueuePatient>();
         private List<Doctor> Doctors = new List<Doctor>();
-        private List<Registry> Registries = new List<Registry>();
         private List<LogItem> LogList = new List<LogItem>();
         private Random Rnd = new Random();
         private TextBox _LogPatient_TB, _Stat_TB;
@@ -49,7 +48,8 @@ namespace kyrsachpoprog
                 NewPatientEvent(this, E);
 
             if (E.Sick != null)
-                PrintResult("Не найдена подходящая очередь, <" +  E.Sick + "> покинул поликлинику");
+                PrintResult("Не найдена подходящая очередь, <" + E.Sick + "> покинул поликлинику");
+
         }
 
         private event EventHandler<LogArgs> RunTimeEvent;
@@ -136,36 +136,18 @@ namespace kyrsachpoprog
                 Queue.SinglePatientEvent -= Doc.WaitSingle;
         }
 
-        public void AddRegistry(Registry Reg)
-        {
-            Registries.Add(Reg);
-            RunTimeEvent += Reg.RunTime;
-            foreach (QueuePatient Queue in QueuesPatient)
-            {
-                Queue.SinglePatientEvent += Reg.WaitSingle;
-                Reg.IsReadyEventRegistry += Queue.SetRegistry;
-            }
-        }
-
-        public void RemoveRegistry(Registry Reg)
-        {
-            Registries.Remove(Reg);
-            RunTimeEvent -= Reg.RunTime;
-            foreach (QueuePatient Queue in QueuesPatient)
-                Queue.SinglePatientEvent -= Reg.WaitSingle;
-            
-        }
-
-        private void AssingPatientToDoctor(Patient patient)
+        public void AssignPatientToQueue(PatientArgs patient)
         {
             var availableDoctors = Doctors
-                .Where(d => !patient.CountDoctorsVisited(d.DoctorNumber))
-                .OrderBy(d => d.CountAcceptedPatient)
+                .Where(d => !patient.Sick.CountDoctorsVisited(d.DoctorNumber))
+                .OrderBy(d => QueuesPatient[d.DoctorNumber].CountPatient)
                 .ThenByDescending(d => d.DoctorNumber)
                 .ToList();
+
             if (availableDoctors.Any())
             {
-                var doctor = availableDoctors.First();  
+                var doctor = availableDoctors.First();
+                QueuesPatient[doctor.DoctorNumber].NewPatient(this, patient);
             }
         }
     }

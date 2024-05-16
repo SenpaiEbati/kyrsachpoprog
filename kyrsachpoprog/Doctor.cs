@@ -13,21 +13,22 @@ namespace kyrsachpoprog
         private int _ID;
         private TextBox _TB;
         private Patient _Current;
+        private PatientArgs _CurrentArgs;
+        private Manager _Manager;
         private string _Name;
         private int _i;
-        private Queue<Patient> _AcceptedPatient;
 
-        public Doctor(TextBox TB)
+        public Doctor(TextBox TB, Manager manager)
         {
-            _ID = ++Counter;
-            _Name = "Врач №" + _ID;
+            _ID = ++Counter - 1;
+            _Name = _ID == 0 ? "Регистратура" : "Врач №" + _ID;
             _TB = TB;
-            _AcceptedPatient = new Queue<Patient>();
             if (_TB != null)
                 TB.Clear();
+            _Manager = manager;
         }
 
-        public Doctor(): this(null) { }
+        public Doctor(): this(null, null) { }
         public override string ToString()
         {
             return _Name;
@@ -38,27 +39,25 @@ namespace kyrsachpoprog
             get{ return _ID; }
         }
 
-        public int CountAcceptedPatient
-        {
-            get { return _AcceptedPatient.Count; } 
-        }
-
         private bool SetPatient(PatientArgs E)
         {
             if (E.Sick != null)
                 if (_Current == null)
                 {
+                    _CurrentArgs = E;
                     _Current = E.Sick;
-                    _AcceptedPatient.Enqueue(_Current);
+                    _Current.VisitDoctor(_ID);
                     if (_TB != null)
                         _TB.Text = E.Sick.ToString();
                     if (E.PrintResult != null)
-                        E.PrintResult(this + ": принял у себя <" + E.Sick + ">");
+                        E.PrintResult(this + (_ID == 0 ? ": приняла у себя <" + E.Sick + ">"
+                                                       : ": принял у себя <" + E.Sick + ">"));
                 }
                 else
                 {
                     if (E.PrintResult != null)
-                        E.PrintResult(this + ": <" + E.Sick + "> непопал на прием к врачу из-за занятости кабинета другим пациентом или других причин!");
+                        E.PrintResult(this + (_ID == 0 ? ": <" + E.Sick + "> непопал на стойку из-за занятости другим пациентом или других причин!"
+                                                       : ": <" + E.Sick + "> непопал на прием к врачу из-за занятости кабинета другим пациентом или других причин!"));
                 }
             return _Current == null;
         }
@@ -83,12 +82,15 @@ namespace kyrsachpoprog
             {
                 if (e.PrintResult != null)
                     e.PrintLog(new LogItem(_ID, _Current));
-                if (_i > _ID - 1)
+                if (_ID == 0 ? _i > 1: _i > _ID - 1)
                 {
                     if (_TB != null)
                         _TB.Clear();
                     if (e.PrintResult != null)
-                        e.PrintResult(this + ": покинул кабинет <" + _Current + ">");
+                        e.PrintResult(this + (_ID == 0 ? ": покинул стойку <" + _Current + ">"
+                                                       : ": покинул кабинет <" + _Current + ">"));
+                    if (_CurrentArgs.Sick == _Current)
+                        _Manager.AssignPatientToQueue(_CurrentArgs);
                     _Current = null;
                     OnIsReady(e.PrintResult);
                     _i = 0;
