@@ -66,11 +66,11 @@
             this.LogPatients_L = new System.Windows.Forms.Label();
             this.LogPatients_TB = new System.Windows.Forms.TextBox();
             this.Stat_GB = new System.Windows.Forms.GroupBox();
+            this.Stat_TB = new System.Windows.Forms.TextBox();
             this.Stat_B = new System.Windows.Forms.Button();
             this.Stat_L = new System.Windows.Forms.Label();
             this.QueueReg_LB = new System.Windows.Forms.ListBox();
             this.Registry_GB = new System.Windows.Forms.GroupBox();
-            this.Stat_TB = new System.Windows.Forms.TextBox();
             this.Timer_T = new System.Windows.Forms.Timer(this.components);
             this.Doctors_GB.SuspendLayout();
             this.Managment_GB.SuspendLayout();
@@ -370,11 +370,6 @@
             // Count_NUD
             // 
             this.Count_NUD.Location = new System.Drawing.Point(163, 85);
-            this.Count_NUD.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.Count_NUD.Name = "Count_NUD";
             this.Count_NUD.Size = new System.Drawing.Size(72, 20);
             this.Count_NUD.TabIndex = 37;
@@ -451,6 +446,14 @@
             this.Stat_GB.TabStop = false;
             this.Stat_GB.Text = "Отчет";
             // 
+            // Stat_TB
+            // 
+            this.Stat_TB.Location = new System.Drawing.Point(7, 43);
+            this.Stat_TB.Multiline = true;
+            this.Stat_TB.Name = "Stat_TB";
+            this.Stat_TB.Size = new System.Drawing.Size(322, 512);
+            this.Stat_TB.TabIndex = 41;
+            // 
             // Stat_B
             // 
             this.Stat_B.Location = new System.Drawing.Point(6, 561);
@@ -490,14 +493,6 @@
             this.Registry_GB.TabIndex = 39;
             this.Registry_GB.TabStop = false;
             this.Registry_GB.Text = "Регистратура";
-            // 
-            // Stat_TB
-            // 
-            this.Stat_TB.Location = new System.Drawing.Point(7, 43);
-            this.Stat_TB.Multiline = true;
-            this.Stat_TB.Name = "Stat_TB";
-            this.Stat_TB.Size = new System.Drawing.Size(322, 512);
-            this.Stat_TB.TabIndex = 41;
             // 
             // Timer_T
             // 

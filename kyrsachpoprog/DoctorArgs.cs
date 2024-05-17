@@ -9,6 +9,7 @@ namespace kyrsachpoprog
     public class DoctorArgs: OnlyPrintArgs
     {
         public DoctorCalcBack SetDoctor;
+        public int CurrentDocID;
         public bool IsReady;
     }
 }

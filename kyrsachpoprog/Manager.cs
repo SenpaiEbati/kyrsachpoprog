@@ -33,7 +33,7 @@ namespace kyrsachpoprog
 
         public int CountPatient
         {
-            set { if (value >= 1 && value <= 20) _CountPatient = value; }
+            set { if (value >= 0 && value <= 20) _CountPatient = value; }
         }
 
         private event EventHandler<PatientArgs> NewPatientEvent;
@@ -139,7 +139,7 @@ namespace kyrsachpoprog
         public void AssignPatientToQueue(PatientArgs patient)
         {
             var availableDoctors = Doctors
-                .Where(d => !patient.Sick.CountDoctorsVisited(d.DoctorNumber))
+                .Where(d => !patient.Sick.CountDoctorsVisited(d.DoctorNumber) && d.DoctorNumber != 0)
                 .OrderBy(d => QueuesPatient[d.DoctorNumber].CountPatient)
                 .ThenByDescending(d => d.DoctorNumber)
                 .ToList();

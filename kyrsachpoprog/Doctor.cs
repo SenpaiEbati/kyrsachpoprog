@@ -46,12 +46,15 @@ namespace kyrsachpoprog
                 {
                     _CurrentArgs = E;
                     _Current = E.Sick;
-                    _Current.VisitDoctor(_ID);
+                    
                     if (_TB != null)
                         _TB.Text = E.Sick.ToString();
+
+                    _Current.VisitDoctor(_ID);
+
                     if (E.PrintResult != null)
                         E.PrintResult(this + (_ID == 0 ? ": приняла у себя <" + E.Sick + ">"
-                                                       : ": принял у себя <" + E.Sick + ">"));
+                                                        : ": принял у себя <" + E.Sick + ">"));
                 }
                 else
                 {
@@ -69,8 +72,9 @@ namespace kyrsachpoprog
             if (IsReadyEvent != null && _Current == null)
             {
                 DoctorArgs E = new DoctorArgs();
-                E.PrintResult = PrintResult;
                 E.SetDoctor = SetPatient;
+                E.CurrentDocID = _ID;
+                E.PrintResult = PrintResult;
                 E.IsReady = true;
                 IsReadyEvent(this, E);
             }
@@ -82,15 +86,24 @@ namespace kyrsachpoprog
             {
                 if (e.PrintResult != null)
                     e.PrintLog(new LogItem(_ID, _Current));
-                if (_ID == 0 ? _i > 1: _i > _ID - 1)
+                if (_Current.ID == 1 ? _ID == 0 ? _i > 0 : _i > _ID - 1 : _ID == 0 ? _i > 1 : _i > _ID - 1)
                 {
                     if (_TB != null)
                         _TB.Clear();
                     if (e.PrintResult != null)
-                        e.PrintResult(this + (_ID == 0 ? ": покинул стойку <" + _Current + ">"
-                                                       : ": покинул кабинет <" + _Current + ">"));
+                    {
+                        e.PrintResult(this + (_ID == 0 ? ": покинул стойку <" + _Current + ">" : ": покинул кабинет <" + _Current + ">"));
+                        if (_Current.CountDoctorsVisited(0) ==
+                            _Current.CountDoctorsVisited(1) ==
+                            _Current.CountDoctorsVisited(2) ==
+                            _Current.CountDoctorsVisited(3) ==
+                            _Current.CountDoctorsVisited(4) ==
+                            _Current.CountDoctorsVisited(5))
+                            e.PrintResult(_Current + " и покинул поликлинику");
+                    }
                     if (_CurrentArgs.Sick == _Current)
                         _Manager.AssignPatientToQueue(_CurrentArgs);
+                    
                     _Current = null;
                     OnIsReady(e.PrintResult);
                     _i = 0;

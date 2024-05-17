@@ -50,32 +50,36 @@ namespace kyrsachpoprog
             }
         }
 
-        public void NewPatient(object sender, PatientArgs e) 
+        public void NewPatient(object sender, PatientArgs E) 
         {
-            if (e.Sick != null)
+            if (E.Sick != null)
             {
-                _Queue.Enqueue(e.Sick);
+                _Queue.Enqueue(E.Sick);
                 if (_LB != null)
-                    _LB.Items.Add(e.Sick);
-                if (e.PrintResult != null)
-                    e.PrintResult(this + ": добавлен <" +  e.Sick + ">");
-
-                e.Sick = null;
-                OnSinglePatient(e.PrintResult);
+                    _LB.Items.Add(E.Sick);
+                if (E.PrintResult != null)
+                    E.PrintResult(this + ": добавлен <" + E.Sick + ">");
+                E.Sick = null;
+                OnSinglePatient(E.PrintResult);
             }
         }
 
         public void SetDoctor(object sender, DoctorArgs e)
         {
-            if (_Queue.Count > 0 && e.IsReady)
+            if (_Queue.Count > 0 && e.IsReady && e.CurrentDocID == _ID)
             {
                 PatientArgs E = new PatientArgs();
-                E.Sick = _Queue.Dequeue();
-                _LB.Items.Remove(E.Sick);
-                if (e.PrintResult != null)
-                    e.PrintResult(this + ": покинул очередь <" + E.Sick + ">");
-                E.PrintResult = e.PrintResult;
-                e.IsReady = e.SetDoctor(E);
+                
+                E.Sick = _Queue.ElementAt(0);
+                if ((E.Sick.CountDoctorsVisited(0) && !E.Sick.CountDoctorsVisited(e.CurrentDocID)) || (!E.Sick.CountDoctorsVisited(0) && e.CurrentDocID == 0))
+                {
+                    _Queue.Dequeue();
+                    _LB.Items.Remove(E.Sick);
+                    if (e.PrintResult != null)
+                        e.PrintResult(this + ": покинул очередь <" + E.Sick + ">");
+                    E.PrintResult = e.PrintResult;
+                    e.IsReady = e.SetDoctor(E);
+                }
             }
         }
     }
