@@ -33,7 +33,7 @@ namespace kyrsachpoprog
         public int Number
         {
             get { return _Number; }
-            set { if (value > 0 && value < 6) _Number = value; }
+            set { if (Number >= 0 && Number <= 5) _Number = value; }
         }
 
         public Patient Patient

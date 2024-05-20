@@ -506,7 +506,7 @@
             // 
             // Timer_T
             // 
-            this.Timer_T.Interval = 6;
+            this.Timer_T.Interval = 60000;
             this.Timer_T.Tick += new System.EventHandler(this.Timer_T_Tick);
             // 
             // Main_F

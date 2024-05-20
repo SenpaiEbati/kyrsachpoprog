@@ -114,12 +114,14 @@ namespace kyrsachpoprog
                 result.Add(string.Format("Доктор №{0} принял всего у себя {1}.", 
                                         doctorGroup.DoctorId,
                                         (doctorGroup.TotalPatients > 4 ? doctorGroup.TotalPatients + " пациентов" : doctorGroup.TotalPatients + " пациента")));
-                result.Add("Из них к моменту приема:");
+                result.Add("Из них на данный момент:");
 
                 foreach (var visitGroup in doctorGroup.PatientsGroupedByVisits)
                 {
                     result.Add(string.Format("  {0} {1};", 
-                        visitGroup.PatientsCount > 1 ? (visitGroup.PatientsCount > 4 ? visitGroup.PatientsCount + " пациентов посетили" : visitGroup.PatientsCount + " пациента посетили") : visitGroup.PatientsCount + " пациент посетил", 
+                        visitGroup.PatientsCount > 1 ? 
+                            (visitGroup.PatientsCount > 4 ? visitGroup.PatientsCount + " пациентов посетили" : visitGroup.PatientsCount + " пациента посетили") : 
+                            visitGroup.PatientsCount + " пациент посетил", 
                         visitGroup.VisitCount > 1 ? visitGroup.VisitCount + " врачей" : visitGroup.VisitCount + " врача"));
                 }
             }
