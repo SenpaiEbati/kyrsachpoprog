@@ -35,5 +35,10 @@ namespace kyrsachpoprog
             get { return _Number; }
             set { if (value > 0 && value < 6) _Number = value; }
         }
+
+        public Patient Patient
+        {
+            get { return _Patient; }
+        }
     }
 }

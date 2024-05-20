@@ -88,15 +88,49 @@ namespace kyrsachpoprog
             }
         }
 
-        /*public void SetStat()
+        public void SetStat()
         {
-            var res = //
-            _Stat_TB.Clear();
-            foreach (var elem in res)
-            {
+            var doctorGroups = from log in LogList
+                               where log.Number > 0
+                               group log by log.Number into doctorGroup
+                               select new
+                               {
+                                   DoctorId = doctorGroup.Key,
+                                   TotalPatients = doctorGroup.Select(log => log.Patient).Distinct().Count(),
+                                   PatientsGroupedByVisits = from patient in doctorGroup.Select(log => log.Patient).Distinct()
+                                                             group patient by patient.NumDoctorsVisit.Count(id => id > 0) into visitGroup
+                                                             orderby visitGroup.Key
+                                                             select new
+                                                             {
+                                                                 VisitCount = visitGroup.Key,
+                                                                 PatientsCount = visitGroup.Count()
+                                                             }
+                               };
 
+            var result = new List<string>();
+
+            foreach (var doctorGroup in doctorGroups)
+            {
+                result.Add(string.Format("Доктор №{0} принял всего у себя {1}.", 
+                                        doctorGroup.DoctorId,
+                                        (doctorGroup.TotalPatients > 4 ? doctorGroup.TotalPatients + " пациентов" : doctorGroup.TotalPatients + " пациента")));
+                result.Add("Из них к моменту приема:");
+
+                foreach (var visitGroup in doctorGroup.PatientsGroupedByVisits)
+                {
+                    result.Add(string.Format("  {0} {1};", 
+                        visitGroup.PatientsCount > 1 ? (visitGroup.PatientsCount > 4 ? visitGroup.PatientsCount + " пациентов посетили" : visitGroup.PatientsCount + " пациента посетили") : visitGroup.PatientsCount + " пациент посетил", 
+                        visitGroup.VisitCount > 1 ? visitGroup.VisitCount + " врачей" : visitGroup.VisitCount + " врача"));
+                }
             }
-        }*/
+
+            // Выводим результат в текстовое поле
+            _Stat_TB.Clear();
+            foreach (var line in result)
+            {
+                _Stat_TB.AppendText(line + Environment.NewLine);
+            }
+        }
 
         public void AddQueue(QueuePatient Queue)
         {

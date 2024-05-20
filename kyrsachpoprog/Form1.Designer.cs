@@ -85,6 +85,7 @@
             // 
             this.Doctor1_TB.Location = new System.Drawing.Point(18, 55);
             this.Doctor1_TB.Name = "Doctor1_TB";
+            this.Doctor1_TB.ReadOnly = true;
             this.Doctor1_TB.Size = new System.Drawing.Size(172, 20);
             this.Doctor1_TB.TabIndex = 0;
             // 
@@ -128,6 +129,7 @@
             // 
             this.Registry_TB.Location = new System.Drawing.Point(6, 35);
             this.Registry_TB.Name = "Registry_TB";
+            this.Registry_TB.ReadOnly = true;
             this.Registry_TB.Size = new System.Drawing.Size(172, 20);
             this.Registry_TB.TabIndex = 28;
             // 
@@ -214,6 +216,7 @@
             // 
             this.Doctor2_TB.Location = new System.Drawing.Point(228, 56);
             this.Doctor2_TB.Name = "Doctor2_TB";
+            this.Doctor2_TB.ReadOnly = true;
             this.Doctor2_TB.Size = new System.Drawing.Size(172, 20);
             this.Doctor2_TB.TabIndex = 12;
             // 
@@ -239,6 +242,7 @@
             // 
             this.Doctor5_TB.Location = new System.Drawing.Point(832, 55);
             this.Doctor5_TB.Name = "Doctor5_TB";
+            this.Doctor5_TB.ReadOnly = true;
             this.Doctor5_TB.Size = new System.Drawing.Size(172, 20);
             this.Doctor5_TB.TabIndex = 24;
             // 
@@ -264,6 +268,7 @@
             // 
             this.Doctor3_TB.Location = new System.Drawing.Point(428, 55);
             this.Doctor3_TB.Name = "Doctor3_TB";
+            this.Doctor3_TB.ReadOnly = true;
             this.Doctor3_TB.Size = new System.Drawing.Size(172, 20);
             this.Doctor3_TB.TabIndex = 16;
             // 
@@ -289,6 +294,7 @@
             // 
             this.Doctor4_TB.Location = new System.Drawing.Point(631, 55);
             this.Doctor4_TB.Name = "Doctor4_TB";
+            this.Doctor4_TB.ReadOnly = true;
             this.Doctor4_TB.Size = new System.Drawing.Size(172, 20);
             this.Doctor4_TB.TabIndex = 20;
             // 
@@ -342,6 +348,7 @@
             this.Manual_RB.TabStop = true;
             this.Manual_RB.Text = "Вручную";
             this.Manual_RB.UseVisualStyleBackColor = true;
+            this.Manual_RB.CheckedChanged += new System.EventHandler(this.SetMode);
             // 
             // Auto_RB
             // 
@@ -353,6 +360,7 @@
             this.Auto_RB.TabStop = true;
             this.Auto_RB.Text = "Автоматически";
             this.Auto_RB.UseVisualStyleBackColor = true;
+            this.Auto_RB.CheckedChanged += new System.EventHandler(this.SetMode);
             // 
             // NewPatients_GB
             // 
@@ -451,6 +459,8 @@
             this.Stat_TB.Location = new System.Drawing.Point(7, 43);
             this.Stat_TB.Multiline = true;
             this.Stat_TB.Name = "Stat_TB";
+            this.Stat_TB.ReadOnly = true;
+            this.Stat_TB.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Stat_TB.Size = new System.Drawing.Size(322, 512);
             this.Stat_TB.TabIndex = 41;
             // 
@@ -496,7 +506,7 @@
             // 
             // Timer_T
             // 
-            this.Timer_T.Interval = 60000;
+            this.Timer_T.Interval = 6;
             this.Timer_T.Tick += new System.EventHandler(this.Timer_T_Tick);
             // 
             // Main_F

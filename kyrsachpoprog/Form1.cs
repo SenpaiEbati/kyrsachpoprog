@@ -22,6 +22,9 @@ namespace kyrsachpoprog
 
         private void Main_F_Load(object sender, EventArgs e)
         {
+            Manual_B.Enabled = false;
+            Stat_B.Enabled = false;
+
             MainManager = new Manager(LogPatients_TB,Stat_TB);
             MainManager.Chance = Convert.ToInt32(Input_NUD.Value);
             MainManager.CountPatient = Convert.ToInt32(Count_NUD.Value);
@@ -60,7 +63,7 @@ namespace kyrsachpoprog
 
         private void Stat_B_Click(object sender, EventArgs e)
         {
-            //MainManager.SetStat();
+            MainManager.SetStat();
         }
 
         private void Input_NUD_ValueChanged(object sender, EventArgs e)

@@ -26,6 +26,8 @@ namespace kyrsachpoprog
 
         public int ID {  get { return _ID; } }
 
+        public Queue<int> NumDoctorsVisit { get {  return _NumDoctorsVisit; } }
+
         public bool CountDoctorsVisited(int DoctorID)
         {
             return _NumDoctorsVisit.Contains(DoctorID);
@@ -35,5 +37,7 @@ namespace kyrsachpoprog
         {
             _NumDoctorsVisit.Enqueue(DoctorID);
         }
+
+
     }
 }
