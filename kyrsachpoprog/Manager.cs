@@ -126,7 +126,6 @@ namespace kyrsachpoprog
                 }
             }
 
-            // Выводим результат в текстовое поле
             _Stat_TB.Clear();
             foreach (var line in result)
             {
@@ -174,11 +173,10 @@ namespace kyrsachpoprog
 
         public void AssignPatientToQueue(PatientArgs patient)
         {
-            var availableDoctors = Doctors
-                .Where(d => !patient.Sick.CountDoctorsVisited(d.DoctorNumber) && d.DoctorNumber != 0)
-                .OrderBy(d => QueuesPatient[d.DoctorNumber].CountPatient)
-                .ThenByDescending(d => d.DoctorNumber)
-                .ToList();
+            var availableDoctors = (from d in Doctors
+                                    where !patient.Sick.CountDoctorsVisited(d.DoctorNumber) && d.DoctorNumber != 0
+                                    orderby QueuesPatient[d.DoctorNumber].CountPatient, d.DoctorNumber descending
+                                    select d).ToList();
 
             if (availableDoctors.Any())
             {
