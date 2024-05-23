@@ -19,10 +19,10 @@ namespace kyrsachpoprog
         {
             _ID = ++Counter - 1;
             _LB = LB;
-            _Name = string.Format("Очередь {0}",_ID > 0 ? "к доктору №" + _ID : "в регистратуру");
+            _Name = string.Format("Очередь {0}", _ID > 0 ? "к доктору №" + _ID : "в регистратуру");
         }
 
-        public QueuePatient() : this(null) { } 
+        public QueuePatient() : this(null) { }
 
         public override string ToString()
         {
@@ -43,24 +43,28 @@ namespace kyrsachpoprog
 
         private void OnSinglePatient(CalcBack PrintResult)
         {
-            if (SinglePatientEvent != null && _Queue.Count == 1) { 
+            if (SinglePatientEvent != null && _Queue.Count == 1)
+            {
                 OnlyPrintArgs E = new OnlyPrintArgs();
                 E.PrintResult = PrintResult;
                 SinglePatientEvent(this, E);
             }
         }
 
-        public void NewPatient(object sender, PatientArgs E) 
+        public void NewPatient(object sender, PatientArgs E)
         {
             if (E.Sick != null)
             {
-                _Queue.Enqueue(E.Sick);
-                if (_LB != null)
-                    _LB.Items.Add(E.Sick);
-                if (E.PrintResult != null)
-                    E.PrintResult(this + ": добавлен <" + E.Sick + ">");
-                E.Sick = null;
-                OnSinglePatient(E.PrintResult);
+                if (((E.Sick.CountDoctorsVisited(0) && !E.Sick.CountDoctorsVisited(_ID)) || (!E.Sick.CountDoctorsVisited(0) && _ID == 0)))
+                {
+                    _Queue.Enqueue(E.Sick);
+                    if (_LB != null)
+                        _LB.Items.Add(E.Sick);
+                    if (E.PrintResult != null)
+                        E.PrintResult(this + ": добавлен <" + E.Sick + ">");
+                    E.Sick = null;
+                    OnSinglePatient(E.PrintResult);
+                }
             }
         }
 
@@ -69,17 +73,14 @@ namespace kyrsachpoprog
             if (_Queue.Count > 0 && e.IsReady && e.CurrentDocID == _ID)
             {
                 PatientArgs E = new PatientArgs();
-                
-                E.Sick = _Queue.ElementAt(0);
-                if ((E.Sick.CountDoctorsVisited(0) && !E.Sick.CountDoctorsVisited(e.CurrentDocID)) || (!E.Sick.CountDoctorsVisited(0) && e.CurrentDocID == 0))
-                {
-                    _Queue.Dequeue();
-                    _LB.Items.Remove(E.Sick);
-                    if (e.PrintResult != null)
-                        e.PrintResult(this + ": покинул очередь <" + E.Sick + ">");
-                    E.PrintResult = e.PrintResult;
-                    e.IsReady = e.SetDoctor(E);
-                }
+
+                E.Sick = _Queue.Dequeue();
+                _LB.Items.Remove(E.Sick);
+                if (e.PrintResult != null)
+                    e.PrintResult(this + ": покинул очередь <" + E.Sick + ">");
+                E.PrintResult = e.PrintResult;
+                e.IsReady = e.SetDoctor(E);
+
             }
         }
     }

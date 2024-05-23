@@ -43,7 +43,7 @@ namespace kyrsachpoprog
             PatientArgs E = new PatientArgs();
             E.Sick = new Patient();
             E.PrintResult = PrintResult;
-  
+
             if (NewPatientEvent != null)
                 NewPatientEvent(this, E);
 
@@ -71,7 +71,7 @@ namespace kyrsachpoprog
                 _LogPatient_TB.AppendText(s + Environment.NewLine);
         }
 
-        private void PrintLog(LogItem Item) 
+        private void PrintLog(LogItem Item)
         {
             LogList.Add(Item);
         }
@@ -111,17 +111,17 @@ namespace kyrsachpoprog
 
             foreach (var doctorGroup in doctorGroups)
             {
-                result.Add(string.Format("Доктор №{0} принял всего у себя {1}.", 
+                result.Add(string.Format("Доктор №{0} принял всего у себя {1}.",
                                         doctorGroup.DoctorId,
                                         (doctorGroup.TotalPatients > 4 ? doctorGroup.TotalPatients + " пациентов" : doctorGroup.TotalPatients + " пациента")));
                 result.Add("Из них на данный момент:");
 
                 foreach (var visitGroup in doctorGroup.PatientsGroupedByVisits)
                 {
-                    result.Add(string.Format("  {0} {1};", 
-                        visitGroup.PatientsCount > 1 ? 
-                            (visitGroup.PatientsCount > 4 ? visitGroup.PatientsCount + " пациентов посетили" : visitGroup.PatientsCount + " пациента посетили") : 
-                            visitGroup.PatientsCount + " пациент посетил", 
+                    result.Add(string.Format("  {0} {1};",
+                        visitGroup.PatientsCount > 1 ?
+                            (visitGroup.PatientsCount > 4 ? visitGroup.PatientsCount + " пациентов посетили" : visitGroup.PatientsCount + " пациента посетили") :
+                            visitGroup.PatientsCount + " пациент посетил",
                         visitGroup.VisitCount > 1 ? visitGroup.VisitCount + " врачей" : visitGroup.VisitCount + " врача"));
                 }
             }
@@ -141,14 +141,14 @@ namespace kyrsachpoprog
             {
                 Doc.IsReadyEvent += Queue.SetDoctor;
                 Queue.SinglePatientEvent += Doc.WaitSingle;
-            } 
+            }
         }
 
         public void RemoveQueue(QueuePatient Queue)
         {
             QueuesPatient.Remove(Queue);
             NewPatientEvent -= Queue.NewPatient;
-            foreach(Doctor Doc in Doctors)
+            foreach (Doctor Doc in Doctors)
                 Doc.IsReadyEvent -= Queue.SetDoctor;
         }
 
@@ -158,6 +158,7 @@ namespace kyrsachpoprog
             RunTimeEvent += Doc.RunTime;
             foreach (QueuePatient Queue in QueuesPatient)
             {
+                Doc.IsFinishedАppointment += GetQueueRun;
                 Queue.SinglePatientEvent += Doc.WaitSingle;
                 Doc.IsReadyEvent += Queue.SetDoctor;
             }
@@ -167,21 +168,24 @@ namespace kyrsachpoprog
         {
             Doctors.Remove(Doc);
             RunTimeEvent -= Doc.RunTime;
-            foreach(QueuePatient Queue in QueuesPatient)
+            foreach (QueuePatient Queue in QueuesPatient)
                 Queue.SinglePatientEvent -= Doc.WaitSingle;
         }
 
-        public void AssignPatientToQueue(PatientArgs patient)
+        public void GetQueueRun(object sender, PatientArgs patient)
         {
-            var availableDoctors = (from d in Doctors
-                                    where !patient.Sick.CountDoctorsVisited(d.DoctorNumber) && d.DoctorNumber != 0
-                                    orderby QueuesPatient[d.DoctorNumber].CountPatient, d.DoctorNumber descending
-                                    select d).ToList();
-
-            if (availableDoctors.Any())
+            if (patient.Sick != null)
             {
-                var doctor = availableDoctors.First();
-                QueuesPatient[doctor.DoctorNumber].NewPatient(this, patient);
+                var availableDoctors = (from d in Doctors
+                                        where !patient.Sick.CountDoctorsVisited(d.DoctorNumber) && d.DoctorNumber != 0
+                                        orderby QueuesPatient[d.DoctorNumber].CountPatient, d.DoctorNumber descending
+                                        select d).ToList();
+
+                if (availableDoctors.Any())
+                {
+                    var doctor = availableDoctors.First();
+                    QueuesPatient[doctor.DoctorNumber].NewPatient(this, patient);
+                }
             }
         }
     }

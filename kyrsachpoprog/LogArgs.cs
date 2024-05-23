@@ -9,5 +9,6 @@ namespace kyrsachpoprog
     public class LogArgs: OnlyPrintArgs
     {
         public LogCalcBack PrintLog;
+        public List<QueuePatient> Queues;
     }
 }

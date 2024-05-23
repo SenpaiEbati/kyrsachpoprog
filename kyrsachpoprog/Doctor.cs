@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,21 +15,18 @@ namespace kyrsachpoprog
         private TextBox _TB;
         private Patient _Current;
         private PatientArgs _CurrentArgs;
-        private Manager _Manager;
         private string _Name;
-        private int _i;
 
-        public Doctor(TextBox TB, Manager manager)
+        public Doctor(TextBox TB)
         {
             _ID = ++Counter - 1;
             _Name = _ID == 0 ? "Регистратура" : "Врач №" + _ID;
             _TB = TB;
             if (_TB != null)
                 TB.Clear();
-            _Manager = manager;
         }
 
-        public Doctor(): this(null, null) { }
+        public Doctor() : this(null) { }
         public override string ToString()
         {
             return _Name;
@@ -36,7 +34,7 @@ namespace kyrsachpoprog
 
         public int DoctorNumber
         {
-            get{ return _ID; }
+            get { return _ID; }
         }
 
         private bool SetPatient(PatientArgs E)
@@ -46,7 +44,7 @@ namespace kyrsachpoprog
                 {
                     _CurrentArgs = E;
                     _Current = E.Sick;
-                    
+
                     if (_TB != null)
                         _TB.Text = E.Sick.ToString();
 
@@ -66,7 +64,7 @@ namespace kyrsachpoprog
         }
 
         public event EventHandler<DoctorArgs> IsReadyEvent;
-        
+
         private void OnIsReady(CalcBack PrintResult)
         {
             if (IsReadyEvent != null && _Current == null)
@@ -80,35 +78,35 @@ namespace kyrsachpoprog
             }
         }
 
+        public event IsFinished IsFinishedАppointment;
+
         public void RunTime(object sender, LogArgs e)
         {
             if (_Current != null)
             {
                 if (e.PrintResult != null)
                     e.PrintLog(new LogItem(_ID, _Current));
-                if (_Current.ID == 1 ? _ID == 0 ? _i > 0 : _i > _ID - 1 : _ID == 0 ? _i > 1 : _i > _ID - 1)
+
+                _Current.TimeAtDoctor++;
+
+                if ((_ID == 0 && _Current.TimeAtDoctor >= 2) || (!(_Current.ID == 1 && _ID == 5) && _ID != 0 && _Current.TimeAtDoctor >= _ID) || (_ID == 5 && _Current.ID == 1 && _Current.TimeAtDoctor >= _ID + 1))
                 {
                     if (_TB != null)
                         _TB.Clear();
                     if (e.PrintResult != null)
                     {
                         e.PrintResult(this + (_ID == 0 ? ": покинул стойку <" + _Current + ">" : ": покинул кабинет <" + _Current + ">"));
-                        if (_Current.CountDoctorsVisited(0) ==
-                            _Current.CountDoctorsVisited(1) ==
-                            _Current.CountDoctorsVisited(2) ==
-                            _Current.CountDoctorsVisited(3) ==
-                            _Current.CountDoctorsVisited(4) ==
-                            _Current.CountDoctorsVisited(5))
+                        if (_Current.NumDoctorsVisit.Count == 6)
                             e.PrintResult(_Current + " и покинул поликлинику");
                     }
-                    if (_CurrentArgs.Sick == _Current)
-                        _Manager.AssignPatientToQueue(_CurrentArgs);
-                    
+
+                    if (_CurrentArgs.Sick == _Current && IsFinishedАppointment != null)
+                        IsFinishedАppointment(this, _CurrentArgs);
+
+                    _Current.TimeAtDoctor = 0;
                     _Current = null;
                     OnIsReady(e.PrintResult);
-                    _i = 0;
                 }
-                _i++;
             }
         }
 
@@ -116,5 +114,7 @@ namespace kyrsachpoprog
         {
             OnIsReady(e.PrintResult);
         }
+
+        
     }
 }

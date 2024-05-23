@@ -36,12 +36,12 @@ namespace kyrsachpoprog
             MainManager.AddQueue(new QueuePatient(QueueDoctor4_LB));
             MainManager.AddQueue(new QueuePatient(QueueDoctor5_LB));
 
-            MainManager.AddDoctor(new Doctor(Registry_TB, MainManager));
-            MainManager.AddDoctor(new Doctor(Doctor1_TB, MainManager));
-            MainManager.AddDoctor(new Doctor(Doctor2_TB, MainManager));
-            MainManager.AddDoctor(new Doctor(Doctor3_TB, MainManager));
-            MainManager.AddDoctor(new Doctor(Doctor4_TB, MainManager));
-            MainManager.AddDoctor(new Doctor(Doctor5_TB, MainManager));
+            MainManager.AddDoctor(new Doctor(Registry_TB));
+            MainManager.AddDoctor(new Doctor(Doctor1_TB));
+            MainManager.AddDoctor(new Doctor(Doctor2_TB));
+            MainManager.AddDoctor(new Doctor(Doctor3_TB));
+            MainManager.AddDoctor(new Doctor(Doctor4_TB));
+            MainManager.AddDoctor(new Doctor(Doctor5_TB));
         }
 
         private void Timer_T_Tick(object sender, EventArgs e)
