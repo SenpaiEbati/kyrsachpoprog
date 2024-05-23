@@ -10,9 +10,9 @@ namespace kyrsachpoprog
 {
     public class Manager
     {
-        private List<QueuePatient> QueuesPatient = new List<QueuePatient>();
-        private List<Doctor> Doctors = new List<Doctor>();
-        private List<LogItem> LogList = new List<LogItem>();
+        private Queue<QueuePatient> QueuesPatient = new Queue<QueuePatient>();
+        private Queue<Doctor> Doctors = new Queue<Doctor>();
+        private Queue<LogItem> LogList = new Queue<LogItem>();
         private Random Rnd = new Random();
         private TextBox _LogPatient_TB, _Stat_TB;
 
@@ -73,7 +73,7 @@ namespace kyrsachpoprog
 
         private void PrintLog(LogItem Item)
         {
-            LogList.Add(Item);
+            LogList.Enqueue(Item);
         }
 
         public void OnTimer()
@@ -135,7 +135,7 @@ namespace kyrsachpoprog
 
         public void AddQueue(QueuePatient Queue)
         {
-            QueuesPatient.Add(Queue);
+            QueuesPatient.Enqueue(Queue);
             NewPatientEvent += Queue.NewPatient;
             foreach (Doctor Doc in Doctors)
             {
@@ -146,7 +146,7 @@ namespace kyrsachpoprog
 
         public void RemoveQueue(QueuePatient Queue)
         {
-            QueuesPatient.Remove(Queue);
+            QueuesPatient.Dequeue();
             NewPatientEvent -= Queue.NewPatient;
             foreach (Doctor Doc in Doctors)
                 Doc.IsReadyEvent -= Queue.SetDoctor;
@@ -154,7 +154,7 @@ namespace kyrsachpoprog
 
         public void AddDoctor(Doctor Doc)
         {
-            Doctors.Add(Doc);
+            Doctors.Enqueue(Doc);
             RunTimeEvent += Doc.RunTime;
             foreach (QueuePatient Queue in QueuesPatient)
             {
@@ -166,7 +166,7 @@ namespace kyrsachpoprog
 
         public void RemoveDoctor(Doctor Doc)
         {
-            Doctors.Remove(Doc);
+            Doctors.Dequeue();
             RunTimeEvent -= Doc.RunTime;
             foreach (QueuePatient Queue in QueuesPatient)
                 Queue.SinglePatientEvent -= Doc.WaitSingle;
@@ -178,13 +178,13 @@ namespace kyrsachpoprog
             {
                 var availableDoctors = (from d in Doctors
                                         where !patient.Sick.CountDoctorsVisited(d.DoctorNumber) && d.DoctorNumber != 0
-                                        orderby QueuesPatient[d.DoctorNumber].CountPatient, d.DoctorNumber descending
+                                        orderby QueuesPatient.ElementAt(d.DoctorNumber).CountPatient, d.DoctorNumber descending
                                         select d).ToList();
 
                 if (availableDoctors.Any())
                 {
                     var doctor = availableDoctors.First();
-                    QueuesPatient[doctor.DoctorNumber].NewPatient(this, patient);
+                    QueuesPatient.ElementAt(doctor.DoctorNumber).NewPatient(this, patient);
                 }
             }
         }
