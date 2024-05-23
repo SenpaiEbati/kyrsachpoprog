@@ -32,7 +32,7 @@ namespace kyrsachpoprog
         public int TimeAtDoctor
         {
             get { return _TimeAtDoctor;}    
-            set { _TimeAtDoctor = value; }
+            set { if (value >= 0) _TimeAtDoctor = value; }
         }
 
         public bool CountDoctorsVisited(int DoctorID)

@@ -33,7 +33,7 @@ namespace kyrsachpoprog
 
         public int CountPatient
         {
-            set { if (value >= 0 && value <= 20) _CountPatient = value; }
+            set { if (value >= 1 && value <= 3) _CountPatient = value; }
         }
 
         private event EventHandler<PatientArgs> NewPatientEvent;
@@ -144,13 +144,13 @@ namespace kyrsachpoprog
             }
         }
 
-        public void RemoveQueue(QueuePatient Queue)
-        {
-            QueuesPatient.Dequeue();
-            NewPatientEvent -= Queue.NewPatient;
-            foreach (Doctor Doc in Doctors)
-                Doc.IsReadyEvent -= Queue.SetDoctor;
-        }
+        //public void RemoveQueue(QueuePatient Queue)
+        //{
+        //    QueuesPatient.Dequeue();
+        //    NewPatientEvent -= Queue.NewPatient;
+        //    foreach (Doctor Doc in Doctors)
+        //        Doc.IsReadyEvent -= Queue.SetDoctor;
+        //}
 
         public void AddDoctor(Doctor Doc)
         {
@@ -164,27 +164,27 @@ namespace kyrsachpoprog
             }
         }
 
-        public void RemoveDoctor(Doctor Doc)
-        {
-            Doctors.Dequeue();
-            RunTimeEvent -= Doc.RunTime;
-            foreach (QueuePatient Queue in QueuesPatient)
-                Queue.SinglePatientEvent -= Doc.WaitSingle;
-        }
+        //public void RemoveDoctor(Doctor Doc)
+        //{
+        //    Doctors.Dequeue();
+        //    RunTimeEvent -= Doc.RunTime;
+        //    foreach (QueuePatient Queue in QueuesPatient)
+        //        Queue.SinglePatientEvent -= Doc.WaitSingle;
+        //}
 
-        public void GetQueueRun(object sender, PatientArgs patient)
+        public void GetQueueRun(object sender, PatientArgs E)
         {
-            if (patient.Sick != null)
+            if (E.Sick != null)
             {
-                var availableDoctors = (from d in Doctors
-                                        where !patient.Sick.CountDoctorsVisited(d.DoctorNumber) && d.DoctorNumber != 0
+                var dogs = (from d in Doctors
+                                        where !E.Sick.CountDoctorsVisited(d.DoctorNumber) && d.DoctorNumber != 0
                                         orderby QueuesPatient.ElementAt(d.DoctorNumber).CountPatient, d.DoctorNumber descending
                                         select d).ToList();
 
-                if (availableDoctors.Any())
+                if (dogs.Any())
                 {
-                    var doctor = availableDoctors.First();
-                    QueuesPatient.ElementAt(doctor.DoctorNumber).NewPatient(this, patient);
+                    var doctor = dogs.First();
+                    QueuesPatient.ElementAt(doctor.DoctorNumber).NewPatient(this, E);
                 }
             }
         }

@@ -378,6 +378,16 @@
             // Count_NUD
             // 
             this.Count_NUD.Location = new System.Drawing.Point(163, 85);
+            this.Count_NUD.Maximum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.Count_NUD.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.Count_NUD.Name = "Count_NUD";
             this.Count_NUD.Size = new System.Drawing.Size(72, 20);
             this.Count_NUD.TabIndex = 37;
@@ -391,8 +401,13 @@
             // Input_NUD
             // 
             this.Input_NUD.Location = new System.Drawing.Point(163, 41);
+            this.Input_NUD.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             this.Input_NUD.Minimum = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
@@ -400,7 +415,7 @@
             this.Input_NUD.Size = new System.Drawing.Size(72, 20);
             this.Input_NUD.TabIndex = 36;
             this.Input_NUD.Value = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
