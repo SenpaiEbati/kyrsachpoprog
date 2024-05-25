@@ -17,12 +17,13 @@ namespace kyrsachpoprog
         {
             _ID = ++Counter;
             _NumDoctorsVisit = new Queue<int>();
-
         }
 
         public override string ToString()
         {
-            return string.Format("Пациент {0} прошёл {1} {2}", _ID, (_NumDoctorsVisit.Count - 1 <= 0 ? "ни одного": $"{_NumDoctorsVisit.Count - 1}"), _NumDoctorsVisit.Count - 1 <= 1 ? "врача" : "врачей");
+            return string.Format("Пациент {0} прошёл {1} {2}", 
+                _ID, (_NumDoctorsVisit.Count - 1 <= 0 ? "ни одного": 
+                $"{_NumDoctorsVisit.Count - 1}"), _NumDoctorsVisit.Count - 1 <= 1 ? "врача" : "врачей");
         }
 
         public int ID {  get { return _ID; } }

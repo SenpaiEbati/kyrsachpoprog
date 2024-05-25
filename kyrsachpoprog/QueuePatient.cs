@@ -55,7 +55,7 @@ namespace kyrsachpoprog
         {
             if (E.Sick != null)
             {
-                if (((E.Sick.CountDoctorsVisited(0) && !E.Sick.CountDoctorsVisited(_ID)) || (!E.Sick.CountDoctorsVisited(0) && _ID == 0)))
+                if ((E.Sick.CountDoctorsVisited(0) && !E.Sick.CountDoctorsVisited(_ID)) || (!E.Sick.CountDoctorsVisited(0) && _ID == 0))
                 {
                     _Queue.Enqueue(E.Sick);
                     if (_LB != null)

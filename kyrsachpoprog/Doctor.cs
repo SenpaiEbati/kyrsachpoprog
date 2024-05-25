@@ -13,7 +13,6 @@ namespace kyrsachpoprog
         private static int Counter;
         private int _ID;
         private TextBox _TB;
-        private Patient _Current;
         private PatientArgs _CurrentArgs;
         private string _Name;
 
@@ -40,34 +39,35 @@ namespace kyrsachpoprog
         private bool SetPatient(PatientArgs E)
         {
             if (E.Sick != null)
-                if (_Current == null)
+                if (_CurrentArgs == null)
                 {
                     _CurrentArgs = E;
-                    _Current = E.Sick;
 
                     if (_TB != null)
                         _TB.Text = E.Sick.ToString();
 
-                    _Current.VisitDoctor(_ID);
+                    _CurrentArgs.Sick.VisitDoctor(_ID);
 
                     if (E.PrintResult != null)
-                        E.PrintResult(this + (_ID == 0 ? ": приняла у себя <" + E.Sick + ">"
-                                                        : ": принял у себя <" + E.Sick + ">"));
+                        E.PrintResult(this + (_ID == 0 ? 
+                            ": приняла у себя <" + E.Sick + ">" : 
+                            ": принял у себя <" + E.Sick + ">"));
                 }
                 else
                 {
                     if (E.PrintResult != null)
-                        E.PrintResult(this + (_ID == 0 ? ": <" + E.Sick + "> непопал на стойку из-за занятости другим пациентом или других причин!"
-                                                       : ": <" + E.Sick + "> непопал на прием к врачу из-за занятости кабинета другим пациентом или других причин!"));
+                        E.PrintResult(this + (_ID == 0 ? 
+                            ": <" + E.Sick + "> непопал на стойку из-за занятости другим пациентом или других причин!" : 
+                            ": <" + E.Sick + "> непопал на прием к врачу из-за занятости кабинета другим пациентом или других причин!"));
                 }
-            return _Current == null;
+            return _CurrentArgs.Sick == null;
         }
 
         public event EventHandler<DoctorArgs> IsReadyEvent;
 
         private void OnIsReady(CalcBack PrintResult)
         {
-            if (IsReadyEvent != null && _Current == null)
+            if (IsReadyEvent != null && _CurrentArgs == null)
             {
                 DoctorArgs E = new DoctorArgs();
                 E.SetDoctor = SetPatient;
@@ -82,30 +82,40 @@ namespace kyrsachpoprog
 
         public void RunTime(object sender, LogArgs e)
         {
-            if (_Current != null)
+            if (_CurrentArgs != null)
             {
-                if (e.PrintResult != null)
-                    e.PrintLog(new LogItem(_ID, _Current));
-
-                _Current.TimeAtDoctor++;
-
-                if ((_ID == 0 && _Current.TimeAtDoctor >= 2) || (!(_Current.ID == 1 && _ID == 5) && _ID != 0 && _Current.TimeAtDoctor >= _ID) || (_ID == 5 && _Current.ID == 1 && _Current.TimeAtDoctor >= _ID + 1))
+                if (_CurrentArgs.Sick != null)
                 {
-                    if (_TB != null)
-                        _TB.Clear();
                     if (e.PrintResult != null)
+                        e.PrintLog(new LogItem(_ID, _CurrentArgs.Sick));
+
+                    _CurrentArgs.Sick.TimeAtDoctor++;
+
+                    if ((_ID == 0 && _CurrentArgs.Sick.TimeAtDoctor >= 2) ||
+                        (!(_CurrentArgs.Sick.ID == 1 && _ID == 5) && 
+                        _ID != 0 && _CurrentArgs.Sick.TimeAtDoctor >= _ID) ||
+                        (_ID == 5 && _CurrentArgs.Sick.ID == 1 && 
+                        _CurrentArgs.Sick.TimeAtDoctor >= _ID + 1))
                     {
-                        e.PrintResult(this + (_ID == 0 ? ": покинул стойку <" + _Current + ">" : ": покинул кабинет <" + _Current + ">"));
-                        if (_Current.NumDoctorsVisit.Count == 6)
-                            e.PrintResult(_Current + " и покинул поликлинику");
+                        if (_TB != null)
+                            _TB.Clear();
+                        if (e.PrintResult != null)
+                        {
+                            e.PrintResult(this + (_ID == 0 ? 
+                                ": покинул стойку <" + _CurrentArgs.Sick + ">" : 
+                                ": покинул кабинет <" + _CurrentArgs.Sick + ">"));
+                            if (_CurrentArgs.Sick.NumDoctorsVisit.Count == 6)
+                                e.PrintResult(_CurrentArgs.Sick + " и покинул поликлинику");
+                        }
+
+                        Patient p = _CurrentArgs.Sick;
+                        if (IsFinishedАppointment != null)
+                            IsFinishedАppointment(this, _CurrentArgs);
+
+                        p.TimeAtDoctor = 0;
+                        _CurrentArgs = null;
+                        OnIsReady(e.PrintResult);
                     }
-
-                    if (_CurrentArgs.Sick == _Current && IsFinishedАppointment != null)
-                        IsFinishedАppointment(this, _CurrentArgs);
-
-                    _Current.TimeAtDoctor = 0;
-                    _Current = null;
-                    OnIsReady(e.PrintResult);
                 }
             }
         }
@@ -114,7 +124,5 @@ namespace kyrsachpoprog
         {
             OnIsReady(e.PrintResult);
         }
-
-        
     }
 }

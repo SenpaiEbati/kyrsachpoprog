@@ -27,7 +27,8 @@ namespace kyrsachpoprog
 
         public override string ToString()
         {
-            return string.Format("{0} принимает пациента №{1}",_Number > 0 ? "Доктор №" + _Number : "Регистратура",_Patient.ID);
+            return string.Format("{0} принимает пациента №{1}",_Number > 0 ? 
+                                 "Доктор №" + _Number : "Регистратура",_Patient.ID);
         }
 
         public int Number

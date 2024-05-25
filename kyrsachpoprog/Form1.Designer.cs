@@ -96,7 +96,7 @@
             this.Doctor1_L.Name = "Doctor1_L";
             this.Doctor1_L.Size = new System.Drawing.Size(51, 13);
             this.Doctor1_L.TabIndex = 1;
-            this.Doctor1_L.Text = "Врач №1";
+            this.Doctor1_L.Text = "Врач №&1";
             // 
             // QueueDoctor1_L
             // 
@@ -105,7 +105,7 @@
             this.QueueDoctor1_L.Name = "QueueDoctor1_L";
             this.QueueDoctor1_L.Size = new System.Drawing.Size(110, 13);
             this.QueueDoctor1_L.TabIndex = 11;
-            this.QueueDoctor1_L.Text = "Очередь к врачу №1";
+            this.QueueDoctor1_L.Text = "Очеред&ь к врачу №1";
             // 
             // QueueReg_L
             // 
@@ -114,7 +114,7 @@
             this.QueueReg_L.Name = "QueueReg_L";
             this.QueueReg_L.Size = new System.Drawing.Size(129, 13);
             this.QueueReg_L.TabIndex = 31;
-            this.QueueReg_L.Text = "Очередь в регистратуру";
+            this.QueueReg_L.Text = "Очер&едь в регистратуру";
             // 
             // label12
             // 
@@ -161,7 +161,7 @@
             this.Doctors_GB.Size = new System.Drawing.Size(1018, 333);
             this.Doctors_GB.TabIndex = 32;
             this.Doctors_GB.TabStop = false;
-            this.Doctors_GB.Text = "Коридор с кабинетами врачей";
+            this.Doctors_GB.Text = "Ко&ридор с кабинетами врачей";
             // 
             // QueueDoctor5_LB
             // 
@@ -314,7 +314,7 @@
             this.Registry_L.Name = "Registry_L";
             this.Registry_L.Size = new System.Drawing.Size(116, 13);
             this.Registry_L.TabIndex = 33;
-            this.Registry_L.Text = "Стойка регистратуры";
+            this.Registry_L.Text = "Стойка рег&истратуры";
             // 
             // Managment_GB
             // 
@@ -326,7 +326,7 @@
             this.Managment_GB.Size = new System.Drawing.Size(241, 109);
             this.Managment_GB.TabIndex = 34;
             this.Managment_GB.TabStop = false;
-            this.Managment_GB.Text = "Управление";
+            this.Managment_GB.Text = "&Управление";
             // 
             // Manual_B
             // 
@@ -334,7 +334,7 @@
             this.Manual_B.Name = "Manual_B";
             this.Manual_B.Size = new System.Drawing.Size(108, 23);
             this.Manual_B.TabIndex = 2;
-            this.Manual_B.Text = "Шаг";
+            this.Manual_B.Text = "&Шаг";
             this.Manual_B.UseVisualStyleBackColor = true;
             this.Manual_B.Click += new System.EventHandler(this.Manual_B_Click);
             // 
@@ -345,8 +345,7 @@
             this.Manual_RB.Name = "Manual_RB";
             this.Manual_RB.Size = new System.Drawing.Size(67, 17);
             this.Manual_RB.TabIndex = 1;
-            this.Manual_RB.TabStop = true;
-            this.Manual_RB.Text = "Вручную";
+            this.Manual_RB.Text = "&Вручную";
             this.Manual_RB.UseVisualStyleBackColor = true;
             this.Manual_RB.CheckedChanged += new System.EventHandler(this.SetMode);
             // 
@@ -357,8 +356,7 @@
             this.Auto_RB.Name = "Auto_RB";
             this.Auto_RB.Size = new System.Drawing.Size(103, 17);
             this.Auto_RB.TabIndex = 0;
-            this.Auto_RB.TabStop = true;
-            this.Auto_RB.Text = "Автоматически";
+            this.Auto_RB.Text = "&Автоматически";
             this.Auto_RB.UseVisualStyleBackColor = true;
             this.Auto_RB.CheckedChanged += new System.EventHandler(this.SetMode);
             // 
@@ -373,7 +371,7 @@
             this.NewPatients_GB.Size = new System.Drawing.Size(241, 139);
             this.NewPatients_GB.TabIndex = 35;
             this.NewPatients_GB.TabStop = false;
-            this.NewPatients_GB.Text = "Новые пациенты";
+            this.NewPatients_GB.Text = "&Новые пациенты";
             // 
             // Count_NUD
             // 
@@ -428,7 +426,7 @@
             this.Count_L.Name = "Count_L";
             this.Count_L.Size = new System.Drawing.Size(104, 13);
             this.Count_L.TabIndex = 1;
-            this.Count_L.Text = "Количество от 1 до";
+            this.Count_L.Text = "Количе&ство от 1 до";
             // 
             // Input_L
             // 
@@ -437,16 +435,16 @@
             this.Input_L.Name = "Input_L";
             this.Input_L.Size = new System.Drawing.Size(153, 13);
             this.Input_L.TabIndex = 0;
-            this.Input_L.Text = "Вероятность появления 1 из";
+            this.Input_L.Text = "Вер&оятность появления 1 из";
             // 
             // LogPatients_L
             // 
             this.LogPatients_L.AutoSize = true;
             this.LogPatients_L.Location = new System.Drawing.Point(489, 9);
             this.LogPatients_L.Name = "LogPatients_L";
-            this.LogPatients_L.Size = new System.Drawing.Size(226, 13);
+            this.LogPatients_L.Size = new System.Drawing.Size(232, 13);
             this.LogPatients_L.TabIndex = 36;
-            this.LogPatients_L.Text = "Дейстрия выполненые на последнем шаге";
+            this.LogPatients_L.Text = "Действ&ия выполненные на последнем шаге";
             // 
             // LogPatients_TB
             // 
@@ -467,7 +465,7 @@
             this.Stat_GB.Size = new System.Drawing.Size(335, 615);
             this.Stat_GB.TabIndex = 38;
             this.Stat_GB.TabStop = false;
-            this.Stat_GB.Text = "Отчет";
+            this.Stat_GB.Text = "&Отчет";
             // 
             // Stat_TB
             // 
@@ -485,7 +483,7 @@
             this.Stat_B.Name = "Stat_B";
             this.Stat_B.Size = new System.Drawing.Size(323, 45);
             this.Stat_B.TabIndex = 40;
-            this.Stat_B.Text = "Количество  обслуженных врачами пациентов";
+            this.Stat_B.Text = "&Количество обслуженных врачами пациентов";
             this.Stat_B.UseVisualStyleBackColor = true;
             this.Stat_B.Click += new System.EventHandler(this.Stat_B_Click);
             // 
@@ -496,7 +494,7 @@
             this.Stat_L.Name = "Stat_L";
             this.Stat_L.Size = new System.Drawing.Size(112, 13);
             this.Stat_L.TabIndex = 39;
-            this.Stat_L.Text = "Результаты запроса";
+            this.Stat_L.Text = "Результаты &запроса";
             // 
             // QueueReg_LB
             // 
@@ -517,7 +515,7 @@
             this.Registry_GB.Size = new System.Drawing.Size(190, 276);
             this.Registry_GB.TabIndex = 39;
             this.Registry_GB.TabStop = false;
-            this.Registry_GB.Text = "Регистратура";
+            this.Registry_GB.Text = "Регистра&тура";
             // 
             // Timer_T
             // 

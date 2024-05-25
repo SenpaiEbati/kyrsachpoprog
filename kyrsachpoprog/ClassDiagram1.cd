@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="kyrsachpoprog.Doctor">
+    <Position X="7" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACAAAQABAAAAAAEAgICIAgAAQAAAAAAAAAAIAAEAgA=</HashCode>
+      <FileName>Doctor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="kyrsachpoprog.DoctorArgs">
+    <Position X="3" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAgAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>DoctorArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="kyrsachpoprog.LogArgs">
+    <Position X="5.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LogArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="kyrsachpoprog.LogItem">
+    <Position X="9.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAEAEAAABAQAAAAAAAAAAAAAECAA=</HashCode>
+      <FileName>LogItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="kyrsachpoprog.Manager">
+    <Position X="12" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BAkAIACAIAQAAABACYACAAACAACBAAQAAkAAAAAABIA=</HashCode>
+      <FileName>Manager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="kyrsachpoprog.OnlyPrintArgs">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>OnlyPrintArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="kyrsachpoprog.Patient">
+    <Position X="7" Y="5.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAACAgAgAAEAAAAAAAAAQAEAAAAAAAAAEAEAAQ=</HashCode>
+      <FileName>Patient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="kyrsachpoprog.PatientArgs">
+    <Position X="0.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PatientArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="kyrsachpoprog.QueuePatient">
+    <Position X="9.25" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAkAAABAAAAAEAAAAIAAAAQARAAAAAAAIAAgEAAA=</HashCode>
+      <FileName>QueuePatient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Delegate Name="kyrsachpoprog.CalcBack">
+    <Position X="14.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="kyrsachpoprog.DoctorCalcBack">
+    <Position X="16.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="kyrsachpoprog.LogCalcBack">
+    <Position X="14.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Common.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="kyrsachpoprog.IsFinished">
+    <Position X="16.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Common.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

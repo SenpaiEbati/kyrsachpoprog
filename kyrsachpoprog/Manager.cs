@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace kyrsachpoprog
 {
-    public class Manager
+    class Manager
     {
         private Queue<QueuePatient> QueuesPatient = new Queue<QueuePatient>();
         private Queue<Doctor> Doctors = new Queue<Doctor>();
@@ -90,22 +90,24 @@ namespace kyrsachpoprog
 
         public void SetStat()
         {
-            var doctorGroups = from log in LogList
-                               where log.Number > 0
-                               group log by log.Number into doctorGroup
-                               select new
-                               {
-                                   DoctorId = doctorGroup.Key,
-                                   TotalPatients = doctorGroup.Select(log => log.Patient).Distinct().Count(),
-                                   PatientsGroupedByVisits = from patient in doctorGroup.Select(log => log.Patient).Distinct()
-                                                             group patient by patient.NumDoctorsVisit.Count(id => id > 0) into visitGroup
-                                                             orderby visitGroup.Key
-                                                             select new
-                                                             {
-                                                                 VisitCount = visitGroup.Key,
-                                                                 PatientsCount = visitGroup.Count()
-                                                             }
-                               };
+            var doctorGroups = 
+                from log in LogList
+                where log.Number > 0
+                group log by log.Number into doctorGroup
+                select new
+                {
+                    DoctorId = doctorGroup.Key,
+                    TotalPatients = doctorGroup.Select(log => log.Patient).Distinct().Count(),
+                    PatientsGroupedByVisits = 
+                    from patient in doctorGroup.Select(log => log.Patient).Distinct()
+                    group patient by patient.NumDoctorsVisit.Count(id => id > 0) into visitGroup
+                    orderby visitGroup.Key
+                    select new
+                    {
+                        VisitCount = visitGroup.Key,
+                        PatientsCount = visitGroup.Count()
+                    }
+                };
 
             var result = new List<string>();
 
@@ -113,16 +115,22 @@ namespace kyrsachpoprog
             {
                 result.Add(string.Format("Доктор №{0} принял всего у себя {1}.",
                                         doctorGroup.DoctorId,
-                                        (doctorGroup.TotalPatients > 4 ? doctorGroup.TotalPatients + " пациентов" : doctorGroup.TotalPatients + " пациента")));
+                                        (doctorGroup.TotalPatients > 4 ? 
+                                        doctorGroup.TotalPatients + " пациентов" : 
+                                        doctorGroup.TotalPatients + " пациента")));
                 result.Add("Из них на данный момент:");
 
                 foreach (var visitGroup in doctorGroup.PatientsGroupedByVisits)
                 {
                     result.Add(string.Format("  {0} {1};",
                         visitGroup.PatientsCount > 1 ?
-                            (visitGroup.PatientsCount > 4 ? visitGroup.PatientsCount + " пациентов посетили" : visitGroup.PatientsCount + " пациента посетили") :
+                            (visitGroup.PatientsCount > 4 ? 
+                            visitGroup.PatientsCount + " пациентов посетили" : 
+                            visitGroup.PatientsCount + " пациента посетили") :
                             visitGroup.PatientsCount + " пациент посетил",
-                        visitGroup.VisitCount > 1 ? visitGroup.VisitCount + " врачей" : visitGroup.VisitCount + " врача"));
+                        visitGroup.VisitCount > 1 ? 
+                        visitGroup.VisitCount + " врачей" : 
+                        visitGroup.VisitCount + " врача"));
                 }
             }
 
@@ -158,7 +166,7 @@ namespace kyrsachpoprog
             RunTimeEvent += Doc.RunTime;
             foreach (QueuePatient Queue in QueuesPatient)
             {
-                Doc.IsFinishedАppointment += GetQueueRun;
+                Doc.IsFinishedАppointment += SetQueueRun;
                 Queue.SinglePatientEvent += Doc.WaitSingle;
                 Doc.IsReadyEvent += Queue.SetDoctor;
             }
@@ -172,14 +180,14 @@ namespace kyrsachpoprog
         //        Queue.SinglePatientEvent -= Doc.WaitSingle;
         //}
 
-        public void GetQueueRun(object sender, PatientArgs E)
+        public void SetQueueRun(object sender, PatientArgs E)
         {
             if (E.Sick != null)
             {
                 var dogs = (from d in Doctors
-                                        where !E.Sick.CountDoctorsVisited(d.DoctorNumber) && d.DoctorNumber != 0
-                                        orderby QueuesPatient.ElementAt(d.DoctorNumber).CountPatient, d.DoctorNumber descending
-                                        select d).ToList();
+                            where !E.Sick.CountDoctorsVisited(d.DoctorNumber) && d.DoctorNumber != 0
+                            orderby QueuesPatient.ElementAt(d.DoctorNumber).CountPatient, d.DoctorNumber descending
+                            select d).ToList();
 
                 if (dogs.Any())
                 {

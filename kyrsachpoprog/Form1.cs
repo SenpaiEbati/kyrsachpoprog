@@ -17,7 +17,6 @@ namespace kyrsachpoprog
             InitializeComponent();
         }
 
-        private Random Rnd = new Random();
         private Manager MainManager;
 
         private void Main_F_Load(object sender, EventArgs e)
