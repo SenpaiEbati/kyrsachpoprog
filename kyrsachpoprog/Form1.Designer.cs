@@ -413,7 +413,7 @@
             this.Input_NUD.Size = new System.Drawing.Size(72, 20);
             this.Input_NUD.TabIndex = 36;
             this.Input_NUD.Value = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});

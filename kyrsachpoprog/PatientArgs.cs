@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace kyrsachpoprog
 {
+    // Класс наследник
     public class PatientArgs: OnlyPrintArgs
     {
         public Patient Sick;
