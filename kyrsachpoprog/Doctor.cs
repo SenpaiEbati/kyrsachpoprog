@@ -110,7 +110,7 @@ namespace kyrsachpoprog
 
                         Patient p = _CurrentArgs.Sick;
                         if (IsFinishedАppointment != null)
-                            IsFinishedАppointment(this, _CurrentArgs);
+                            IsFinishedАppointment(_CurrentArgs, e.Queues, e.Doctors);
 
                         p.TimeAtDoctor = 0;
                         _CurrentArgs = null;

@@ -10,5 +10,6 @@ namespace kyrsachpoprog
     {
         public LogCalcBack PrintLog;
         public List<QueuePatient> Queues;
+        public List<Doctor> Doctors;
     }
 }

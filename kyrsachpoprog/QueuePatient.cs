@@ -83,5 +83,22 @@ namespace kyrsachpoprog
 
             }
         }
+
+        public void SetQueueRun(PatientArgs E, List<QueuePatient> Q, List<Doctor> D)
+        {
+            if (E.Sick != null)
+            {
+                var dogs = (from d in D
+                            where !E.Sick.CountDoctorsVisited(d.DoctorNumber) && d.DoctorNumber != 0
+                            orderby Q.ElementAt(d.DoctorNumber).CountPatient, d.DoctorNumber descending
+                            select d).ToList();
+
+                if (dogs.Any())
+                {
+                    var doctor = dogs.First();
+                    Q.ElementAt(doctor.DoctorNumber).NewPatient(this, E);
+                }
+            }
+        }
     }
 }

@@ -10,9 +10,9 @@ namespace kyrsachpoprog
 {
     class Manager
     {
-        private Queue<QueuePatient> QueuesPatient = new Queue<QueuePatient>();
-        private Queue<Doctor> Doctors = new Queue<Doctor>();
-        private Queue<LogItem> LogList = new Queue<LogItem>();
+        private List<QueuePatient> QueuesPatient = new List<QueuePatient>();
+        private List<Doctor> Doctors = new List<Doctor>();
+        private List<LogItem> LogList = new List<LogItem>();
         private Random Rnd = new Random();
         private TextBox _LogPatient_TB, _Stat_TB;
 
@@ -61,6 +61,8 @@ namespace kyrsachpoprog
                 LogArgs E = new LogArgs();
                 E.PrintResult = PrintResult;
                 E.PrintLog = PrintLog;
+                E.Queues = QueuesPatient;
+                E.Doctors = Doctors;
                 RunTimeEvent(this, E);
             }
         }
@@ -73,7 +75,7 @@ namespace kyrsachpoprog
 
         private void PrintLog(LogItem Item)
         {
-            LogList.Enqueue(Item);
+            LogList.Add(Item);
         }
 
         public void OnTimer()
@@ -143,7 +145,7 @@ namespace kyrsachpoprog
 
         public void AddQueue(QueuePatient Queue)
         {
-            QueuesPatient.Enqueue(Queue);
+            QueuesPatient.Add(Queue);
             NewPatientEvent += Queue.NewPatient;
             foreach (Doctor Doc in Doctors)
             {
@@ -162,11 +164,11 @@ namespace kyrsachpoprog
 
         public void AddDoctor(Doctor Doc)
         {
-            Doctors.Enqueue(Doc);
+            Doctors.Add(Doc);
             RunTimeEvent += Doc.RunTime;
             foreach (QueuePatient Queue in QueuesPatient)
             {
-                Doc.IsFinishedАppointment += SetQueueRun;
+                Doc.IsFinishedАppointment += Queue.SetQueueRun;
                 Queue.SinglePatientEvent += Doc.WaitSingle;
                 Doc.IsReadyEvent += Queue.SetDoctor;
             }
@@ -179,22 +181,5 @@ namespace kyrsachpoprog
         //    foreach (QueuePatient Queue in QueuesPatient)
         //        Queue.SinglePatientEvent -= Doc.WaitSingle;
         //}
-
-        public void SetQueueRun(object sender, PatientArgs E)
-        {
-            if (E.Sick != null)
-            {
-                var dogs = (from d in Doctors
-                            where !E.Sick.CountDoctorsVisited(d.DoctorNumber) && d.DoctorNumber != 0
-                            orderby QueuesPatient.ElementAt(d.DoctorNumber).CountPatient, d.DoctorNumber descending
-                            select d).ToList();
-
-                if (dogs.Any())
-                {
-                    var doctor = dogs.First();
-                    QueuesPatient.ElementAt(doctor.DoctorNumber).NewPatient(this, E);
-                }
-            }
-        }
     }
 }
