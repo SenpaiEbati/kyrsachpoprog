@@ -56,7 +56,7 @@ namespace kyrsachpoprog
             // Активация события
             if (NewPatientEvent != null)
                 NewPatientEvent(this, E);
-            // Если автомобиль существует,
+            // Если пациент существует,
             // то ни одна из очередей его не разместила у себя
             if (E.Sick != null)
                 PrintResult("Не найдена подходящая очередь, <" + E.Sick + "> покинул поликлинику");
@@ -173,12 +173,16 @@ namespace kyrsachpoprog
         public void AddQueue(QueuePatient Queue)
         {
             QueuesPatient.Add(Queue);
-            // Фиксация заинтересованности очереди в событии Новый пациент
-            NewPatientEvent += Queue.NewPatient;
+            
+            if (Queue.QueueNumber == 0)
+                // Фиксация заинтересованности очереди в событии Новый пациент
+                NewPatientEvent += Queue.NewPatient;
+            
             foreach (Doctor Doc in Doctors)
             {   // Взаимная фиксации между очередью и доктором
                 Doc.IsReadyEvent += Queue.SetDoctor;
                 Queue.SinglePatientEvent += Doc.WaitSingle;
+                Doc.IsFinishedАppointment += Queue.SetQueueRun;
             }
         }
         // Метод добавление нового доктора

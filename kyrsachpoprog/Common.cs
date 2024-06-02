@@ -12,5 +12,5 @@ namespace kyrsachpoprog
     // Требуется для отображения в LogPatients_TB
     public delegate void LogCalcBack(LogItem e);
     // Делегат требующийся для передачи пациента из рук доктора в руки очереди
-    public delegate void IsFinished(PatientArgs e, List<QueuePatient> q, List<Doctor> r);
+    public delegate void IsFinished(PatientArgs e, int n);
 }

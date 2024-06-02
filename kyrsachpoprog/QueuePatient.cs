@@ -62,7 +62,7 @@ namespace kyrsachpoprog
             {
                 // Пациент должен пройти регистратуру и идти к тем врачам которых не прошел
                 // или идти сначала в регистратуру
-                if ((E.Sick.CountDoctorsVisited(0) && !E.Sick.CountDoctorsVisited(_ID)) || (!E.Sick.CountDoctorsVisited(0) && _ID == 0))
+                if (!E.Sick.CountDoctorsVisited(0) && _ID == 0)
                 {
                     // Добавление пациента в очередь
                     _Queue.Enqueue(E.Sick);
@@ -101,24 +101,26 @@ namespace kyrsachpoprog
             }
         }
         // Обработка события окончания приема 
-        public void SetQueueRun(PatientArgs E, List<QueuePatient> Q, List<Doctor> D)
+        public void SetQueueRun(PatientArgs E, int DoctorID)
         {
             // Проверка на существование
-            if (E.Sick != null && Q != null && D != null)
+            if (E.Sick != null)
             {
-                // Сортировка очередей по количеству внутри пациентов и докторов по времени приема
-                // с отсеиванием прошедших докторов и регистратуры
-                var dogs = (from d in D
-                            where !E.Sick.CountDoctorsVisited(d.DoctorNumber) && d.DoctorNumber != 0
-                            orderby Q.ElementAt(d.DoctorNumber).CountPatient, d.DoctorNumber descending
-                            select d).ToList();
-                // Проверка на существование
-                if (dogs.Any())
+                // Отправляем в нужнуб очередь
+                if (_ID == DoctorID)
                 {
-                    // Берем первого из списка
-                    var doctor = dogs.First();
-                    // Отправляем в нужнуб очередь
-                    Q.ElementAt(doctor.DoctorNumber).NewPatient(this, E);
+                    // Добавление пациента в очередь
+                    _Queue.Enqueue(E.Sick);
+                    // Отображение в визуальном компоненте
+                    if (_LB != null)
+                        _LB.Items.Add(E.Sick);
+                    // Вывод описания факта размещения пациента
+                    if (E.PrintResult != null)
+                        E.PrintResult(this + ": добавлен <" + E.Sick + ">");
+                    // Пациент уже добавлен в очередь и не должен быть добавлен вновь
+                    E.Sick = null;
+                    // Возможная активация события "Первый в очереди"
+                    OnSinglePatient(E.PrintResult);
                 }
             }
         }

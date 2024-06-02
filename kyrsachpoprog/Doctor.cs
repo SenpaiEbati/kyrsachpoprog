@@ -138,8 +138,19 @@ namespace kyrsachpoprog
                         Patient p = _CurrentArgs.Sick;
                         
                         if (IsFinishedАppointment != null)
-                            // Отправка пациента в следующюю очередь
-                            IsFinishedАppointment(_CurrentArgs, e.Queues, e.Doctors);
+                        {
+                            var dogs = (from d in e.Doctors
+                                        where !p.CountDoctorsVisited(d.DoctorNumber) && d.DoctorNumber != 0
+                                        orderby e.Queues.ElementAt(d.DoctorNumber).CountPatient, d.DoctorNumber descending
+                                        select d).ToList();
+                            // Проверка на существование
+                            if (dogs.Any())
+                            {
+                                // Берем первого из списка
+                                var doctor = dogs.First();
+                                IsFinishedАppointment(_CurrentArgs, doctor.DoctorNumber);
+                            }
+                        }
                         // Обнуляем время прием проведенное в кабинете
                         p.TimeAtDoctor = 0;
                         // Ликвидируем пациента, так как он уже ушел из кабинета
